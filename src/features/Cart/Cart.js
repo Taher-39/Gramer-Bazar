@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, incrementAsync, selectCount } from "./CartSlice";
 
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
@@ -80,7 +80,11 @@ export function Cart() {
                           Qty
                         </label>
 
-                        <select name="quantity" id="qnty" className='rounded-lg'>
+                        <select
+                          name="quantity"
+                          id="qnty"
+                          className="rounded-lg"
+                        >
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -140,12 +144,12 @@ export function Cart() {
             Shipping and taxes calculated at checkout.
           </p>
           <div className="mt-6">
-            <a
-              href="#"
+            <Link
+              to="/checkout"
               className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
               Checkout
-            </a>
+            </Link>
           </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>

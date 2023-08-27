@@ -1,7 +1,7 @@
 import React from "react";
 import { Cart } from "../features/Cart/Cart";
 
-const CartPages = () => {
+const CartPage = () => {
   return (
     <div>
       <Cart />
@@ -9,4 +9,4 @@ const CartPages = () => {
   );
 };
 
-export default CartPages;
+export default CartPage;

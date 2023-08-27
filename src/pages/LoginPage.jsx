@@ -1,10 +1,10 @@
 import React from 'react'
 import { Login } from '../features/Auth/Components/Login'
 
-const LoginPages = () => {
+const LoginPage = () => {
   return (
     <div><Login /></div>
   )
 }
 
-export default LoginPages
+export default LoginPage

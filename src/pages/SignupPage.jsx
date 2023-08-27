@@ -1,7 +1,7 @@
 import React from "react";
 import { SingnUp } from "../features/Auth/Components/SingnUp";
 
-const SignupPages = () => {
+const SignupPage = () => {
   return (
     <div>
       <SingnUp />
@@ -9,4 +9,4 @@ const SignupPages = () => {
   );
 };
 
-export default SignupPages;
+export default SignupPage;
