@@ -1,10 +1,4 @@
-import React, {useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { increment, incrementAsync, selectCount } from "./CartSlice";
 
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 const products = [
@@ -36,9 +30,6 @@ const products = [
 ];
 
 export function Cart() {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(true);
 
   return (
     <div>
@@ -158,7 +149,6 @@ export function Cart() {
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500 ml-2"
-                  onClick={() => setOpen(false)}
                 >
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>
