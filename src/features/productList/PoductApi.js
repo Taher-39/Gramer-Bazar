@@ -6,6 +6,14 @@ export function fetchAllProducts() {
     resolve({ data });
   });
 }
+export function fetchProductById(id) {
+  // todo: we will not hard code server url here
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/products/"+id);
+    const data = await response.json();
+    resolve({ data });
+  });
+}
 
 export function fetchProductsByFilters(filter, sort, pagination) {
   //filter = {'category': ['laptop', 'phone'] }
@@ -35,5 +43,24 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     const data = await response.json();
     const totalItems = await response.headers.get("X-Total-Count");
     resolve({ data: { products: data, totalItems:+totalItems } });
+  });
+}
+
+
+export function fetchProductsCategory() {
+  // todo: we will not hard code server url here
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/category");
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function fetchProductsBrands() {
+  // todo: we will not hard code server url here
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/brands");
+    const data = await response.json();
+    resolve({ data });
   });
 }
