@@ -943,15 +943,15 @@
         },
         {
             "id": 52,
-            "title": "FREE FIRE T Shirt",
+            "title": "T Shirt",
             "description": "quality and professional print - It doesn't just look high quality, it is high quality.",
             "price": 10,
             "discountPercentage": 14.72,
             "rating": 4.52,
             "stock": 128,
-            "brand": "FREE FIRE",
+            "brand": "T Shirt",
             "category": "mens-shirts",
-            "thumbnail": "https://i.dummyjson.com/data/products/52/thumbnail.jpg",
+            "thumbnail": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.filmyvastra.com%2Fwp-content%2Fuploads%2F2019%2F06%2Fnavy-blue-scaled.jpg&f=1&nofb=1&ipt=065dbacb1eea9e2598e54a081bcb751a5c1db84fb2675c2c3c99509604d3b91e&ipo=images",
             "images": [
                 "https://i.dummyjson.com/data/products/52/1.png",
                 "https://i.dummyjson.com/data/products/52/2.png",
