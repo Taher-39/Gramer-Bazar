@@ -1,10 +1,19 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectError, selectLoggedInuser } from "../AuthSlice";
 
 export function Login() {
-  // const count = useSelector();
-  // const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInuser);
+  const error = useSelector(selectError)
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -20,7 +29,13 @@ export function Login() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form
+          noValidate
+          onSubmit={handleSubmit((data) => console.log(data))}
+          className="space-y-6"
+          action="#"
+          method="POST"
+        >
           <div>
             <label
               htmlFor="email"
@@ -30,13 +45,23 @@ export function Login() {
             </label>
             <div className="mt-2">
               <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                    message: "Email Is Not Valid",
+                  },
+                })}
                 id="email"
                 name="email"
                 type="email"
-                autoComplete="email"
-                required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.email && (
+                <span role="alert" className="text-red-400">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
           </div>
 
@@ -59,13 +84,19 @@ export function Login() {
             </div>
             <div className="mt-2">
               <input
+                {...register("password", {
+                  required: "Password is required",
+                })}
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
-                required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.password && (
+                <span role="alert" className="text-red-400">
+                  {errors.password.message}
+                </span>
+              )}
             </div>
           </div>
 
@@ -85,7 +116,7 @@ export function Login() {
             to="/signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Create An Account 
+            Create An Account
           </Link>
         </p>
       </div>
