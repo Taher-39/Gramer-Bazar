@@ -1,4 +1,4 @@
-import { Children, Fragment } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
-  imageUrl:''
+  imageUrl: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-hX6v4DM5ifY%2FUfT56hUQSAI%2FAAAAAAAADb0%2FrIj2OyG00gE%2Fs1600%2FVerses%2Bof%2Bthe%2BQuran%2Bin%2BMasjid%2Bal%2BHaram%2B%2B(3).JPG&f=1&nofb=1&ipt=80f3574410b9b7688b24430dabdc31c04a14963eaf4fcab246f0ca9006f5bca1&ipo=images",
 };
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -19,10 +19,11 @@ const navigation = [
   { name: "Calendar", href: "#", current: false },
   { name: "Reports", href: "#", current: false },
 ];
+
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Your Profile", link: "/" },
+  { name: "Settings", link: "/" },
+  { name: "Sign Out", link: "/login" },
 ];
 
 function classNames(...classes) {
@@ -94,7 +95,7 @@ const Navbar = ({ children }) => {
                           <img
                             className="h-8 w-8 rounded-full"
                             src={user.imageUrl}
-                            alt=""
+                            alt="User Img"
                           />
                         </Menu.Button>
                       </div>
@@ -111,15 +112,15 @@ const Navbar = ({ children }) => {
                           {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                               {({ active }) => (
-                                <a
-                                  href={item.href}
+                                <Link
+                                  to={item.link}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
                                   )}
                                 >
                                   {item.name}
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                           ))}

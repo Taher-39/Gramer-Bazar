@@ -9,8 +9,8 @@ const initialState = {
 
 export const createUserAsync = createAsyncThunk(
   "user/createUser",
-  async (userData) => {
-    const response = await createUser(userData);
+  async (loginInfo) => {
+    const response = await createUser(loginInfo);
     return response.data;
   }
 );
