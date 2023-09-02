@@ -48,7 +48,9 @@ export default function ProductDetails() {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    dispatch(AddToCartAsync({ ...product, quantity: 1, user: user.id }));
+    const newItem = { ...product, quantity: 1, user: user.id }
+    delete newItem['id']
+    dispatch(AddToCartAsync(newItem));
     showConfirmationMessage();
   };
   const showConfirmationMessage = () => {

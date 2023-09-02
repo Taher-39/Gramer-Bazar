@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "../features/navbar/Navbar";
 import {
   RemoveCartItemAsync,
@@ -8,34 +8,19 @@ import {
 } from "../features/Cart/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CartItemDeleteAlert from "../features/Modal/CartItemDeleteAlert";
-
-const addresses = [
-  {
-    firstName: "Leslie",
-    lastName: "Alexander",
-    email: "leslie@example.com",
-    country: "Bangladesh",
-    street: "Fuller Road",
-    city: "Dhaka",
-    zipCode: 1232,
-    phone: 1254789652,
-  },
-  {
-    firstName: "Alfaz",
-    lastName: "Hosen",
-    email: "alfaz@example.com",
-    country: "Bangladesh",
-    street: "Badda",
-    city: "Dhaka",
-    zipCode: 1232,
-    phone: 4587962584,
-  },
-];
+import { useForm } from "react-hook-form";
+import {
+  selectLoggedInuser,
+  updateUserAsync,
+} from "../features/Auth/AuthSlice";
+import { createOrderAsync } from "../features/Order/orderSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
-
+  const user = useSelector(selectLoggedInuser);
+  const [selectAddress, setSelectAddress] = useState(null);
+  const [selectPaymentMthd, setSelectPaymentMthd] = useState("mobileBanking");
   const cartItems = useSelector(selectCartItems);
   const totalCost = cartItems.reduce(
     (amount, item) => item.quantity * item.price + amount,
@@ -45,6 +30,12 @@ const CheckoutPage = () => {
     (total, item) => item.quantity + total,
     0
   );
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const handleQuantity = (e, item) => {
     e.preventDefault();
@@ -54,14 +45,48 @@ const CheckoutPage = () => {
     dispatch(RemoveCartItemAsync(item.id));
   };
 
+  const onSubmit = (data) => {
+    dispatch(
+      updateUserAsync({ ...user, addresses: [...user.addresses, data] })
+    );
+    reset();
+  };
+
+  const handleAddress = (e) => {
+    setSelectAddress(user.addresses[e.target.value]);
+  };
+  const handlePayment = (e) => {
+    setSelectPaymentMthd(e.target.value);
+  };
+
+  const handleOrder = () => {
+    dispatch(
+      createOrderAsync({
+        user,
+        selectAddress,
+        selectPaymentMthd,
+        cartItems,
+        totalCost,
+        totalItems,
+        status: 'pending'//status chang admin like 
+      })
+    );
+    // TODO: redirect oredr success page, change stock, clear cart after order
+  };
+
   return (
     <>
+      {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-6">
           {/* Checkout Section */}
           <div className="lg:col-span-3 my-8 ">
-            <form className="bg-slate-100 px-10 py-5 rounded">
+            <form
+              className="bg-slate-100 px-10 py-5 rounded"
+              noValidate
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-2xl font-semibold leading-7 text-gray-900">
@@ -77,32 +102,16 @@ const CheckoutPage = () => {
                         htmlFor="first-name"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        First name
+                        Full Name <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          {...register("name", {
+                            required: "Name is required",
+                          })}
                           type="text"
-                          name="first-name"
-                          id="first-name"
-                          autoComplete="given-name"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-3">
-                      <label
-                        htmlFor="last-name"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        Last name
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          name="last-name"
-                          id="last-name"
-                          autoComplete="family-name"
+                          name="name"
+                          id="name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -113,35 +122,66 @@ const CheckoutPage = () => {
                         htmlFor="country"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Country
+                        Country <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <select
+                          {...register("country", {
+                            required: "Country is required",
+                          })}
                           id="country"
                           name="country"
-                          autoComplete="country-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          <option>United States</option>
-                          <option>Canada</option>
-                          <option>Mexico</option>
+                          <option>Bangladesh</option>
+                          <option>India</option>
+                          <option>Pakistan</option>
+                          <option>Srilanka</option>
+                          <option>Nepal</option>
+                          <option>China</option>
                         </select>
                       </div>
                     </div>
 
                     <div className="col-span-full">
                       <label
-                        htmlFor="street-address"
+                        htmlFor="email"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Street address
+                        Email <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                              value:
+                                /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                              message: "Email Is Not Valid",
+                            },
+                          })}
                           type="text"
-                          name="street-address"
-                          id="street-address"
-                          autoComplete="street-address"
+                          name="email"
+                          id="email"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-span-full">
+                      <label
+                        htmlFor="address"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Address <span className="text-red-500"> *</span>
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          {...register("address", {
+                            required: "Address is required",
+                          })}
+                          type="text"
+                          name="address"
+                          id="address"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -152,14 +192,16 @@ const CheckoutPage = () => {
                         htmlFor="city"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        City
+                        City <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
+                          {...register("city", {
+                            required: "City is required",
+                          })}
                           type="text"
                           name="city"
                           id="city"
-                          autoComplete="address-level2"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -167,35 +209,19 @@ const CheckoutPage = () => {
 
                     <div className="sm:col-span-2">
                       <label
-                        htmlFor="region"
+                        htmlFor="phone"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        State / Province
+                        Phone Number <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
-                          type="text"
-                          name="region"
-                          id="region"
-                          autoComplete="address-level1"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="postal-code"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        ZIP / Postal code
-                      </label>
-                      <div className="mt-2">
-                        <input
-                          type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autoComplete="postal-code"
+                          {...register("phone", {
+                            required: "Phone is required",
+                          })}
+                          type="number"
+                          name="phone"
+                          id="phone"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -227,14 +253,15 @@ const CheckoutPage = () => {
                   </p>
 
                   <ul role="list">
-                    {addresses.map((address) => (
+                    {user.addresses.map((address, index) => (
                       <li
-                        key={address.email}
+                        key={index}
                         className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4"
                       >
                         <div className="flex min-w-0 gap-x-4 ">
                           <input
-                            defaultChecked
+                            onClick={handleAddress}
+                            value={index}
                             name="address"
                             type="radio"
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
@@ -261,10 +288,7 @@ const CheckoutPage = () => {
                         </div>
                         <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                           <p className="text-sm leading-6 text-gray-900">
-                            {address.street}
-                          </p>
-                          <p className="mt-1 text-xs leading-5 text-gray-500">
-                            {address.zipCode}
+                            {address.address}
                           </p>
                         </div>
                       </li>
@@ -282,13 +306,16 @@ const CheckoutPage = () => {
                       <div className="mt-6 space-y-6">
                         <div className="flex items-center gap-x-3">
                           <input
-                            id="cash-on-delivary"
+                            onChange={handlePayment}
+                            value="cash"
+                            checked={selectPaymentMthd === "cash"}
+                            id="cash"
                             name="payment"
                             type="radio"
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
-                            htmlFor="cash-on-delivary"
+                            htmlFor="cash"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
                             Cash On Delivary
@@ -296,13 +323,16 @@ const CheckoutPage = () => {
                         </div>
                         <div className="flex items-center gap-x-3">
                           <input
-                            id="card-payment"
+                            onChange={handlePayment}
+                            value="card"
+                            checked={selectPaymentMthd === "card"}
+                            id="card"
                             name="payment"
                             type="radio"
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
-                            htmlFor="card-payment"
+                            htmlFor="card"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
                             Card Payment
@@ -310,14 +340,16 @@ const CheckoutPage = () => {
                         </div>
                         <div className="flex items-center gap-x-3">
                           <input
-                            defaultChecked
-                            id="mobile-banking"
+                            onChange={handlePayment}
+                            value="mobileBanking"
+                            checked={selectPaymentMthd === "mobileBanking"}
+                            id="mobileBanking"
                             name="payment"
                             type="radio"
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
-                            htmlFor="mobile-banking"
+                            htmlFor="mobileBanking"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
                             Mobile Banking
@@ -332,15 +364,15 @@ const CheckoutPage = () => {
           </div>
           {/* Cart Section */}
           <div className="lg:col-span-3 ">
-            <div className="mx-auto bg-slate-100 max-w-4xl md:w-4/5 sm:w-4/5 px-4 sm:px-6 lg:px-8 rounded">
+            <div className="mx-auto bg-slate-100 max-w-4xl md:w-4/5 sm:w-4/5 px-4 sm:px-6 lg:px-4 rounded">
               <div className="mt-8">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 py-8">
                   Cart
                 </h1>
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cartItems.map((item) => (
-                      <li key={item.id} className="flex py-6">
+                    {cartItems.map((item, index) => (
+                      <li key={index} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
                             src={item.thumbnail}
@@ -355,7 +387,7 @@ const CheckoutPage = () => {
                               <h3>
                                 <p>{item.titile}</p>
                               </h3>
-                              <p className="ml-4">{item.price}</p>
+                              <p className="ml-4">৳ {item.price}</p>
                             </div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <p className="mt-1 text-sm text-gray-500">
@@ -420,14 +452,14 @@ const CheckoutPage = () => {
                 <p className="mt-0.5 text-sm text-gray-500">
                   Shipping and taxes calculated at checkout.
                 </p>
-                {cartItems.length > 0 && <div className="mt-6">
-                  <Link
-                    to="/pay"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                <div className="mt-6">
+                  <div
+                    onClick={handleOrder}
+                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
-                    Pay And Order
-                  </Link>
-                </div>}
+                    Pay Order
+                  </div>
+                </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>
                     or

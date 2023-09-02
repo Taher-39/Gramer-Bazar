@@ -25,7 +25,7 @@ export function SingnUp() {
       return;
     } else {
       setEmailExistsError(false);
-      dispatch(createUserAsync({ email: data.email, password: data.password }));
+      dispatch(createUserAsync({ email: data.email, password: data.password, addresses: [] }));
     }
   };
 

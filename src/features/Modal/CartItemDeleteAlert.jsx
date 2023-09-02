@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { AddToCartAsync } from '../Cart/CartSlice';
-import { useDispatch } from 'react-redux';
+// import { AddToCartAsync } from '../Cart/CartSlice';
+// import { useDispatch } from 'react-redux';
 
 const CartItemDeleteAlert = ({ item, onConfirm }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [isUndoVisible, setIsUndoVisible] = useState(false);
-  const [removedItem, setRemovedItem] = useState(null); 
+  // const [isUndoVisible, setIsUndoVisible] = useState(false);
+  // const [removedItem, setRemovedItem] = useState(null); 
 
   const handleRemoveItem = (e) => {
     e.preventDefault();
@@ -15,22 +15,22 @@ const CartItemDeleteAlert = ({ item, onConfirm }) => {
 
   const confirmRemoveItem = () => {
     setIsAlertOpen(false);
-    setIsUndoVisible(true);
-    setRemovedItem(item); 
+    // setIsUndoVisible(true);
+    // setRemovedItem(item); 
     onConfirm(item);
-    setTimeout(() => {
-      setIsUndoVisible(false);
-      setRemovedItem(null); 
-    }, 5000); 
+    // setTimeout(() => {
+    //   setIsUndoVisible(false);
+    //   setRemovedItem(null); 
+    // }, 5000); 
   };
 
-  const undoRemoveItem = () => {
-    setIsUndoVisible(false);
-    if (removedItem) {
-      dispatch(AddToCartAsync(removedItem));
-      setRemovedItem(null); 
-    }
-  };
+  // const undoRemoveItem = () => {
+  //   setIsUndoVisible(false);
+  //   if (removedItem) {
+  //     dispatch(AddToCartAsync(removedItem));
+  //     setRemovedItem(null); 
+  //   }
+  // };
 
   const closeAlert = () => {
     setIsAlertOpen(false);
@@ -65,7 +65,7 @@ const CartItemDeleteAlert = ({ item, onConfirm }) => {
           </div>
         </div>
       )}
-      {isUndoVisible && (
+      {/* {isUndoVisible && (
         <div className="fixed bottom-0 left-0 mb-4 ml-4">
           <button
             onClick={undoRemoveItem}
@@ -74,7 +74,7 @@ const CartItemDeleteAlert = ({ item, onConfirm }) => {
             Undo
           </button>
         </div>
-      )}
+      )} */}
       
     </div>
   );

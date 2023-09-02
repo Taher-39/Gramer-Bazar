@@ -204,7 +204,6 @@ const Navbar = ({ children }) => {
                       {cartItems.length}
                     </span>
                   )}
-                  44
                 </div>
                 <div className="mt-3 space-y-1 px-2">
                   {userNavigation.map((item) => (

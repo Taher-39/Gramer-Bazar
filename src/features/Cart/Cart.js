@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   RemoveCartItemAsync,
   UpdateCartAsync,
@@ -29,7 +29,9 @@ export function Cart() {
   };
 
   return (
-    <div>
+    <>
+      {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
+
       <div className="mx-auto bg-white max-w-4xl md:w-4/5 sm:w-4/5 px-4 sm:px-6 lg:px-8">
         <div className="mt-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 py-8">
@@ -117,14 +119,14 @@ export function Cart() {
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
           </p>
-          {cartItems.length > 0 &&<div className="mt-6">
+          <div className="mt-6">
             <Link
               to="/checkout"
               className="flex item-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
             >
               Checkout
             </Link>
-          </div>}
+          </div>
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
               or
@@ -141,6 +143,6 @@ export function Cart() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
