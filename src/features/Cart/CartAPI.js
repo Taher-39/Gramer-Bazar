@@ -1,8 +1,43 @@
-// A mock function to mimic making an async request for data
-export function CartFetch() {
+export function AddToCart(item) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8000");
+    const response = await fetch("http://localhost:4000/cart", {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: { "content-type": "application/json" },
+    });
     const data = await response.json();
     resolve({ data });
+  });
+}
+
+export function fetchCartById(id) {
+  // todo: we will not hard code server url here
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/cart?user="+id);
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function UpdateCart(update) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/cart/"+update.id, {
+      method: "PATCH",
+      body: JSON.stringify(update),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function RemoveCartItem(itemId) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/cart/"+itemId, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data: {id: itemId} });
   });
 }

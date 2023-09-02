@@ -6,6 +6,7 @@ export function fetchAllProducts() {
     resolve({ data });
   });
 }
+
 export function fetchProductById(id) {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {

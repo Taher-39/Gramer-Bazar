@@ -6,11 +6,14 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartItems } from "../Cart/CartSlice";
 
 const user = {
   name: "Tom Cook",
   email: "tom@example.com",
-  imageUrl: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-hX6v4DM5ifY%2FUfT56hUQSAI%2FAAAAAAAADb0%2FrIj2OyG00gE%2Fs1600%2FVerses%2Bof%2Bthe%2BQuran%2Bin%2BMasjid%2Bal%2BHaram%2B%2B(3).JPG&f=1&nofb=1&ipt=80f3574410b9b7688b24430dabdc31c04a14963eaf4fcab246f0ca9006f5bca1&ipo=images",
+  imageUrl:
+    "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-hX6v4DM5ifY%2FUfT56hUQSAI%2FAAAAAAAADb0%2FrIj2OyG00gE%2Fs1600%2FVerses%2Bof%2Bthe%2BQuran%2Bin%2BMasjid%2Bal%2BHaram%2B%2B(3).JPG&f=1&nofb=1&ipt=80f3574410b9b7688b24430dabdc31c04a14963eaf4fcab246f0ca9006f5bca1&ipo=images",
 };
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -30,6 +33,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = ({ children }) => {
+  const cartItems = useSelector(selectCartItems);
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -82,9 +86,11 @@ const Navbar = ({ children }) => {
                         />
                       </button>
                     </Link>
-                    <span className="z-10 inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1  text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      3
-                    </span>
+                    {cartItems.length > 0 && (
+                      <span className="z-10 inline-flex items-center rounded-md mb-7 -ml-3 bg-red-50 px-2 py-1  text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                        {cartItems.length}
+                      </span>
+                    )}
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -193,9 +199,11 @@ const Navbar = ({ children }) => {
                       />
                     </button>
                   </Link>
-                  <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 mb-7 -ml-3 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    3
-                  </span>
+                  {cartItems.length > 0 && (
+                    <span className="z-10 inline-flex items-center rounded-md bg-red-50 px-2 py-1 mb-7 -ml-3 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                      {cartItems.length}
+                    </span>
+                  )}
                   44
                 </div>
                 <div className="mt-3 space-y-1 px-2">
