@@ -17,7 +17,6 @@ import { createOrderAsync } from "../features/Order/orderSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(true);
   const user = useSelector(selectLoggedInuser);
   const [selectAddress, setSelectAddress] = useState(null);
   const [selectPaymentMthd, setSelectPaymentMthd] = useState("mobileBanking");
@@ -33,7 +32,6 @@ const CheckoutPage = () => {
   const {
     register,
     reset,
-    formState: { errors },
     handleSubmit,
   } = useForm();
 
@@ -252,7 +250,7 @@ const CheckoutPage = () => {
                     Choose From Existing Adress
                   </p>
 
-                  <ul role="list">
+                  <ul>
                     {user.addresses.map((address, index) => (
                       <li
                         key={index}
@@ -370,7 +368,7 @@ const CheckoutPage = () => {
                   Cart
                 </h1>
                 <div className="flow-root">
-                  <ul role="list" className="-my-6 divide-y divide-gray-200">
+                  <ul className="-my-6 divide-y divide-gray-200">
                     {cartItems.map((item, index) => (
                       <li key={index} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -467,7 +465,6 @@ const CheckoutPage = () => {
                       <button
                         type="button"
                         className="font-medium text-indigo-600 hover:text-indigo-500 ml-2"
-                        onClick={() => setOpen(false)}
                       >
                         Continue Shopping
                         <span aria-hidden="true"> &rarr;</span>

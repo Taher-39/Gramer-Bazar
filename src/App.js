@@ -61,7 +61,7 @@ const App = () => {
     if (user) {
       dispatch(fetchCartByIdAsync(user.id));
     }
-  }, [dispatch, user?.id]);
+  }, [dispatch, user]);
 
   return (
     <>
