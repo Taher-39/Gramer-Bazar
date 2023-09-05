@@ -16,7 +16,7 @@ const user = {
     "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-hX6v4DM5ifY%2FUfT56hUQSAI%2FAAAAAAAADb0%2FrIj2OyG00gE%2Fs1600%2FVerses%2Bof%2Bthe%2BQuran%2Bin%2BMasjid%2Bal%2BHaram%2B%2B(3).JPG&f=1&nofb=1&ipt=80f3574410b9b7688b24430dabdc31c04a14963eaf4fcab246f0ca9006f5bca1&ipo=images",
 };
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
+  { name: "Home", href: "/", current: true },
   { name: "Team", href: "#", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
@@ -24,8 +24,8 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: "Your Profile", link: "/" },
-  { name: "Settings", link: "/" },
+  { name: "Your Profile", link: "/profile" },
+  { name: "Your Orders", link: "/user-orders" },
   { name: "Sign Out", link: "/login" },
 ];
 
@@ -54,9 +54,9 @@ const Navbar = ({ children }) => {
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.href}
                           className={classNames(
                             item.current
                               ? "bg-gray-900 text-white"
@@ -66,7 +66,7 @@ const Navbar = ({ children }) => {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>

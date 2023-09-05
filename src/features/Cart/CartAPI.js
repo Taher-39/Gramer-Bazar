@@ -41,3 +41,13 @@ export function RemoveCartItem(itemId) {
     resolve({ data });
   });
 }
+export function restCart(userId) {
+  return new Promise(async (resolve) => {
+    const responce = await fetchCartById(userId)
+    const items = responce.data;
+    for(let item of items){
+      await RemoveCartItem(item.id)
+    }
+    resolve({ status: 'success' });
+  });
+}

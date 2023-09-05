@@ -4,10 +4,11 @@ import Navbar from "../features/navbar/Navbar";
 
 const ProductDetailsPage = () => {
   return (
-    <div>
-      <Navbar/>
-      <ProductDetails />
-    </div>
+    <>
+      <Navbar>
+        <ProductDetails />
+      </Navbar>
+    </>
   );
 };
 

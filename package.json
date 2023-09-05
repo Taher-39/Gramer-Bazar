@@ -1,5 +1,6 @@
 {
   "name": "grammer-dokan",
+  "proxy": "http://192.168.77.7:8080",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

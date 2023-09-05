@@ -13,11 +13,12 @@ import {
   selectLoggedInuser,
   updateUserAsync,
 } from "../features/Auth/AuthSlice";
-import { createOrderAsync } from "../features/Order/orderSlice";
+import { createOrderAsync, selectCurrentOrder } from "../features/Order/orderSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInuser);
+  const currentOrder = useSelector(selectCurrentOrder);
   const [selectAddress, setSelectAddress] = useState(null);
   const [selectPaymentMthd, setSelectPaymentMthd] = useState("mobileBanking");
   const cartItems = useSelector(selectCartItems);
@@ -29,11 +30,7 @@ const CheckoutPage = () => {
     (total, item) => item.quantity + total,
     0
   );
-  const {
-    register,
-    reset,
-    handleSubmit,
-  } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
   const handleQuantity = (e, item) => {
     e.preventDefault();
@@ -58,23 +55,28 @@ const CheckoutPage = () => {
   };
 
   const handleOrder = () => {
-    dispatch(
-      createOrderAsync({
-        user,
-        selectAddress,
-        selectPaymentMthd,
-        cartItems,
-        totalCost,
-        totalItems,
-        status: 'pending'//status chang admin like 
-      })
-    );
+    if (selectAddress && selectPaymentMthd) {
+      dispatch(
+        createOrderAsync({
+          user,
+          selectAddress,
+          selectPaymentMthd,
+          cartItems,
+          totalCost,
+          totalItems,
+          status: "pending", //status chang admin like delivered, received
+        })
+      );
+    } else {
+      alert("Enter Address or Payment Method");
+    }
     // TODO: redirect oredr success page, change stock, clear cart after order
   };
 
   return (
     <>
       {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
+      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-6">

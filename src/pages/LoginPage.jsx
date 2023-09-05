@@ -1,10 +1,14 @@
-import React from 'react'
-import { Login } from '../features/Auth/Components/Login'
+import { Login } from "../features/Auth/Components/Login";
+import Navbar from "../features/navbar/Navbar";
 
 const LoginPage = () => {
   return (
-    <div><Login /></div>
-  )
-}
+    <>
+      <Navbar>
+        <Login />
+      </Navbar>
+    </>
+  );
+};
 
-export default LoginPage
+export default LoginPage;

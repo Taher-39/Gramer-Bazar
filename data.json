@@ -2346,22 +2346,6 @@
           "address": "Mujahid Club",
           "city": "Pabna, BD",
           "phone": "12457894555"
-        },
-        {
-          "name": "Abu Taher",
-          "country": "Bangladesh",
-          "email": "taherpust@gmail.com",
-          "address": "Mujahid Club",
-          "city": "Pabna, BD",
-          "phone": "01793952014"
-        },
-        {
-          "name": "Abul Kashem",
-          "country": "Bangladesh",
-          "email": "abulkashemsss23@gmail.com",
-          "address": "Mujahid Club",
-          "city": "Pabna, BD",
-          "phone": "012545889"
         }
       ],
       "id": 1
@@ -2399,69 +2383,9 @@
         "https://i.dummyjson.com/data/products/2/3.jpg",
         "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
       ],
-      "quantity": 3,
-      "user": 1,
-      "id": 1
-    },
-    {
-      "title": "MacBook Pro",
-      "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
-      "price": 1749,
-      "discountPercentage": 11.02,
-      "rating": 4.57,
-      "stock": 83,
-      "brand": "Apple",
-      "category": "laptops",
-      "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
-      "images": [
-        "https://i.dummyjson.com/data/products/6/1.png",
-        "https://i.dummyjson.com/data/products/6/2.jpg",
-        "https://i.dummyjson.com/data/products/6/3.png",
-        "https://i.dummyjson.com/data/products/6/4.jpg"
-      ],
       "quantity": 1,
-      "user": 1,
-      "id": 2
-    },
-    {
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "discountPercentage": 17.94,
-      "rating": 4.44,
-      "stock": 34,
-      "brand": "Apple",
-      "category": "smartphones",
-      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/2/1.jpg",
-        "https://i.dummyjson.com/data/products/2/2.jpg",
-        "https://i.dummyjson.com/data/products/2/3.jpg",
-        "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-      ],
-      "quantity": 3,
       "user": 2,
       "id": 3
-    },
-    {
-      "title": "MacBook Pro",
-      "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
-      "price": 1749,
-      "discountPercentage": 11.02,
-      "rating": 4.57,
-      "stock": 83,
-      "brand": "Apple",
-      "category": "laptops",
-      "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
-      "images": [
-        "https://i.dummyjson.com/data/products/6/1.png",
-        "https://i.dummyjson.com/data/products/6/2.jpg",
-        "https://i.dummyjson.com/data/products/6/3.png",
-        "https://i.dummyjson.com/data/products/6/4.jpg"
-      ],
-      "quantity": 3,
-      "user": 2,
-      "id": 4
     }
   ],
   "orders": [
@@ -2477,22 +2401,6 @@
             "address": "Mujahid Club",
             "city": "Pabna, BD",
             "phone": "12457894555"
-          },
-          {
-            "name": "Abu Taher",
-            "country": "Bangladesh",
-            "email": "taherpust@gmail.com",
-            "address": "Mujahid Club",
-            "city": "Pabna, BD",
-            "phone": "01793952014"
-          },
-          {
-            "name": "Abul Kashem",
-            "country": "Bangladesh",
-            "email": "abulkashemsss23@gmail.com",
-            "address": "Mujahid Club",
-            "city": "Pabna, BD",
-            "phone": "012545889"
           }
         ],
         "id": 1
@@ -2523,7 +2431,7 @@
             "https://i.dummyjson.com/data/products/2/3.jpg",
             "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
           ],
-          "quantity": 3,
+          "quantity": 5,
           "user": 1,
           "id": 1
         },
@@ -2543,13 +2451,13 @@
             "https://i.dummyjson.com/data/products/6/3.png",
             "https://i.dummyjson.com/data/products/6/4.jpg"
           ],
-          "quantity": 1,
+          "quantity": 5,
           "user": 1,
           "id": 2
         }
       ],
-      "totalCost": 4446,
-      "totalItems": 4,
+      "totalCost": 13240,
+      "totalItems": 10,
       "status": "pending",
       "id": 1
     },
@@ -2595,33 +2503,13 @@
             "https://i.dummyjson.com/data/products/2/3.jpg",
             "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
           ],
-          "quantity": 3,
-          "user": 2,
-          "id": 3
-        },
-        {
-          "title": "MacBook Pro",
-          "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
-          "price": 1749,
-          "discountPercentage": 11.02,
-          "rating": 4.57,
-          "stock": 83,
-          "brand": "Apple",
-          "category": "laptops",
-          "thumbnail": "https://i.dummyjson.com/data/products/6/thumbnail.png",
-          "images": [
-            "https://i.dummyjson.com/data/products/6/1.png",
-            "https://i.dummyjson.com/data/products/6/2.jpg",
-            "https://i.dummyjson.com/data/products/6/3.png",
-            "https://i.dummyjson.com/data/products/6/4.jpg"
-          ],
-          "quantity": 3,
+          "quantity": 1,
           "user": 2,
           "id": 4
         }
       ],
-      "totalCost": 7944,
-      "totalItems": 6,
+      "totalCost": 899,
+      "totalItems": 1,
       "status": "pending",
       "id": 2
     }
