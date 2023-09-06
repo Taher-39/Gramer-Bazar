@@ -10,10 +10,12 @@ import ProtectedRoute from "./features/Auth/Components/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLoggedInuser } from "./features/Auth/AuthSlice";
 import { fetchCartByIdAsync } from "./features/Cart/CartSlice";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import { fetchLoggedInUserAsync } from "./features/Users/userSlice";
+import { selectLoggedInuser } from "./features/Auth/AuthSlice";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <UserProfilePage />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 const App = () => {
@@ -78,6 +88,7 @@ const App = () => {
   useEffect(() => {
     if (user) {
       dispatch(fetchCartByIdAsync(user.id));
+      dispatch(fetchLoggedInUserAsync(user.id));
     }
   }, [dispatch, user]);
 

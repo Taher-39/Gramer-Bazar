@@ -25,7 +25,14 @@ export function SingnUp() {
       return;
     } else {
       setEmailExistsError(false);
-      dispatch(createUserAsync({ email: data.email, password: data.password, addresses: [] }));
+      dispatch(
+        createUserAsync({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          addresses: [],
+        })
+      );
     }
   };
 
@@ -51,6 +58,30 @@ export function SingnUp() {
             className="space-y-6"
             onSubmit={handleSubmit(onSubmit)}
           >
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name <span className="text-red-500"> *</span>
+              </label>
+              <div className="mt-2">
+                <input
+                  {...register("name", {
+                    required: "Name is required",
+                  })}
+                  id="name"
+                  name="name"
+                  type="name"
+                  className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.name && (
+                  <span role="alert" className="text-red-400">
+                    {errors.name.message}
+                  </span>
+                )}
+              </div>
+            </div>
             <div>
               <label
                 htmlFor="email"

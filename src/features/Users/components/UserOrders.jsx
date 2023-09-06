@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserOrder, fetchUserOrdersAsync } from "../userSlice";
-import { selectLoggedInuser } from "../../Auth/AuthSlice";
+import {
+  selectUserOrder,
+  fetchUserOrdersAsync,
+  selectUserInfo,
+} from "../userSlice";
 
 const UserOrders = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInuser);
+  const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
 
   useEffect(() => {
@@ -14,7 +17,7 @@ const UserOrders = () => {
 
   return (
     <div>
-      {orders.map((order, index) => (
+      {orders?.map((order, index) => (
         <div key={index}>
           <div className="mx-auto bg-white max-w-4xl md:w-4/5 sm:w-4/5 px-4 sm:px-6 lg:px-8">
             <div className="mt-8">
@@ -99,7 +102,7 @@ const UserOrders = () => {
                   {order.selectPaymentMthd}
                 </span>
               </p>
-              <h1>Address</h1>
+              <h1 className="my-2 font-semibold">BILLING & SHIPPING INFORMATION</h1>
               <div className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4">
                 <div className="flex min-w-0 gap-x-4 ">
                   <div className="min-w-0 flex-auto">
@@ -107,10 +110,10 @@ const UserOrders = () => {
                       {order.selectAddress.name}
                     </p>
                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                      Email: {order.selectAddress.email}
+                      {order.selectAddress.email}
                     </p>
                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                      Phone: {order.selectAddress.phone}
+                      {order.selectAddress.phone}
                     </p>
                   </div>
                 </div>
@@ -119,12 +122,20 @@ const UserOrders = () => {
                     {order.selectAddress.country}
                   </p>
                   <p className="mt-1 text-xs leading-5 text-gray-500">
-                    {order.selectAddress.city}
+                    {order.selectAddress.district}
                   </p>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                   <p className="text-sm leading-6 text-gray-900">
+                    {order.selectAddress.thana}
+                  </p>
+                  <p className="text-sm leading-6 text-gray-900">
                     {order.selectAddress.address}
+                  </p>
+                </div>
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm leading-6 text-gray-900">
+                    {order.selectAddress.orderComments}
                   </p>
                 </div>
               </div>

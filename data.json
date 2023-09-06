@@ -2336,82 +2336,43 @@
   ],
   "users": [
     {
-      "email": "test@gmail.com",
-      "password": "test12!@",
-      "addresses": [
-        {
-          "name": "Test User",
-          "country": "Bangladesh",
-          "email": "test@gmail.com",
-          "address": "Mujahid Club",
-          "city": "Pabna, BD",
-          "phone": "12457894555"
-        }
-      ],
+      "name": "Nayeem",
+      "email": "Nayeem@gmail.com",
+      "password": "nayeem12!@",
+      "addresses": [],
       "id": 1
-    },
-    {
-      "email": "example@gmail.com",
-      "password": "test12!@",
-      "addresses": [
-        {
-          "name": "Abu Taher",
-          "country": "Bangladesh",
-          "email": "taherpust@gmail.com",
-          "address": "Mujahid Club",
-          "city": "Pabna, BD",
-          "phone": "01793952014"
-        }
-      ],
-      "id": 2
     }
   ],
-  "cart": [
-    {
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "discountPercentage": 17.94,
-      "rating": 4.44,
-      "stock": 34,
-      "brand": "Apple",
-      "category": "smartphones",
-      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/2/1.jpg",
-        "https://i.dummyjson.com/data/products/2/2.jpg",
-        "https://i.dummyjson.com/data/products/2/3.jpg",
-        "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-      ],
-      "quantity": 1,
-      "user": 2,
-      "id": 3
-    }
-  ],
+  "cart": [],
   "orders": [
     {
       "user": {
-        "email": "test@gmail.com",
-        "password": "test12!@",
+        "name": "Nayeem",
+        "email": "Nayeem@gmail.com",
+        "password": "nayeem12!@",
         "addresses": [
           {
-            "name": "Test User",
+            "name": "Nayeem",
             "country": "Bangladesh",
-            "email": "test@gmail.com",
-            "address": "Mujahid Club",
-            "city": "Pabna, BD",
-            "phone": "12457894555"
+            "email": "Nayeem@gmail.com",
+            "district": "Dhaka",
+            "thana": "Mother Tek",
+            "phone": "01522105687",
+            "address": "Cantonments Gate 2 opposite ",
+            "orderComments": "Need original phone, Jajakallah khairan"
           }
         ],
         "id": 1
       },
       "selectAddress": {
-        "name": "Test User",
+        "name": "Nayeem",
         "country": "Bangladesh",
-        "email": "test@gmail.com",
-        "address": "Mujahid Club",
-        "city": "Pabna, BD",
-        "phone": "12457894555"
+        "email": "Nayeem@gmail.com",
+        "district": "Dhaka",
+        "thana": "Mother Tek",
+        "phone": "01522105687",
+        "address": "Cantonments Gate 2 opposite ",
+        "orderComments": "Need original phone, Jajakallah khairan"
       },
       "selectPaymentMthd": "mobileBanking",
       "cartItems": [
@@ -2431,10 +2392,56 @@
             "https://i.dummyjson.com/data/products/2/3.jpg",
             "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
           ],
-          "quantity": 5,
+          "quantity": 3,
           "user": 1,
           "id": 1
-        },
+        }
+      ],
+      "totalCost": 2697,
+      "totalItems": 3,
+      "status": "pending",
+      "id": 1
+    },
+    {
+      "user": {
+        "name": "Nayeem",
+        "email": "Nayeem@gmail.com",
+        "password": "nayeem12!@",
+        "addresses": [
+          {
+            "name": "Nayeem Mehedi",
+            "country": "Bangladesh",
+            "email": "nayeem@gmail.com",
+            "district": "Rajshahi",
+            "thana": "Mujahid Club",
+            "phone": "01522105687",
+            "orderComments": "Need original phone, Jajakallah khairan"
+          },
+          {
+            "name": "Nayeem",
+            "country": "Bangladesh",
+            "email": "Nayeem@gmail.com",
+            "district": "Dhaka",
+            "thana": "Mother Tek",
+            "phone": "01522105687",
+            "address": "Cantonments Gate 2 opposite",
+            "orderComments": "Need Original Mind It."
+          }
+        ],
+        "id": 1
+      },
+      "selectAddress": {
+        "name": "Nayeem",
+        "country": "Bangladesh",
+        "email": "Nayeem@gmail.com",
+        "district": "Dhaka",
+        "thana": "Mother Tek",
+        "phone": "01522105687",
+        "address": "Cantonments Gate 2 opposite",
+        "orderComments": "Need Original Mind It."
+      },
+      "selectPaymentMthd": "mobileBanking",
+      "cartItems": [
         {
           "title": "MacBook Pro",
           "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
@@ -2451,64 +2458,12 @@
             "https://i.dummyjson.com/data/products/6/3.png",
             "https://i.dummyjson.com/data/products/6/4.jpg"
           ],
-          "quantity": 5,
-          "user": 1,
-          "id": 2
-        }
-      ],
-      "totalCost": 13240,
-      "totalItems": 10,
-      "status": "pending",
-      "id": 1
-    },
-    {
-      "user": {
-        "email": "example@gmail.com",
-        "password": "test12!@",
-        "addresses": [
-          {
-            "name": "Abu Taher",
-            "country": "Bangladesh",
-            "email": "taherpust@gmail.com",
-            "address": "Mujahid Club",
-            "city": "Pabna, BD",
-            "phone": "01793952014"
-          }
-        ],
-        "id": 2
-      },
-      "selectAddress": {
-        "name": "Abu Taher",
-        "country": "Bangladesh",
-        "email": "taherpust@gmail.com",
-        "address": "Mujahid Club",
-        "city": "Pabna, BD",
-        "phone": "01793952014"
-      },
-      "selectPaymentMthd": "mobileBanking",
-      "cartItems": [
-        {
-          "title": "iPhone X",
-          "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-          "price": 899,
-          "discountPercentage": 17.94,
-          "rating": 4.44,
-          "stock": 34,
-          "brand": "Apple",
-          "category": "smartphones",
-          "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-          "images": [
-            "https://i.dummyjson.com/data/products/2/1.jpg",
-            "https://i.dummyjson.com/data/products/2/2.jpg",
-            "https://i.dummyjson.com/data/products/2/3.jpg",
-            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-          ],
           "quantity": 1,
-          "user": 2,
-          "id": 4
+          "user": 1,
+          "id": 3
         }
       ],
-      "totalCost": 899,
+      "totalCost": 1749,
       "totalItems": 1,
       "status": "pending",
       "id": 2

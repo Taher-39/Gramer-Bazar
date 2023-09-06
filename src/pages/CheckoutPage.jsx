@@ -9,15 +9,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CartItemDeleteAlert from "../features/Modal/CartItemDeleteAlert";
 import { useForm } from "react-hook-form";
+import { updateUserAsync } from "../features/Auth/AuthSlice";
 import {
-  selectLoggedInuser,
-  updateUserAsync,
-} from "../features/Auth/AuthSlice";
-import { createOrderAsync, selectCurrentOrder } from "../features/Order/orderSlice";
+  createOrderAsync,
+  selectCurrentOrder,
+} from "../features/Order/orderSlice";
+import { selectUserInfo } from "../features/Users/userSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInuser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
   const [selectAddress, setSelectAddress] = useState(null);
   const [selectPaymentMthd, setSelectPaymentMthd] = useState("mobileBanking");
@@ -76,7 +77,12 @@ const CheckoutPage = () => {
   return (
     <>
       {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
-      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
+      {currentOrder && (
+        <Navigate
+          to={`/order-success/${currentOrder.id}`}
+          replace={true}
+        ></Navigate>
+      )}
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-6">
@@ -90,10 +96,10 @@ const CheckoutPage = () => {
               <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-2xl font-semibold leading-7 text-gray-900">
-                    Personal Information
+                    BILLING & SHIPPING
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Use a permanent address where you can receive mail.
+                    Use a permanent address where you can receive.
                   </p>
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -102,7 +108,7 @@ const CheckoutPage = () => {
                         htmlFor="first-name"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Full Name <span className="text-red-500"> *</span>
+                        Customer Name <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -134,16 +140,11 @@ const CheckoutPage = () => {
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           <option>Bangladesh</option>
-                          <option>India</option>
-                          <option>Pakistan</option>
-                          <option>Srilanka</option>
-                          <option>Nepal</option>
-                          <option>China</option>
                         </select>
                       </div>
                     </div>
 
-                    <div className="col-span-full">
+                    <div className="col-span-3">
                       <label
                         htmlFor="email"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -167,47 +168,47 @@ const CheckoutPage = () => {
                         />
                       </div>
                     </div>
-                    <div className="col-span-full">
+                    <div className="col-span-3">
                       <label
-                        htmlFor="address"
+                        htmlFor="district"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Address <span className="text-red-500"> *</span>
+                        District <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
-                          {...register("address", {
-                            required: "Address is required",
+                          {...register("district", {
+                            required: "District is required",
                           })}
                           type="text"
-                          name="address"
-                          id="address"
+                          name="district"
+                          id="district"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
 
-                    <div className="sm:col-span-2 sm:col-start-1">
+                    <div className="sm:col-span-3 sm:col-start-1">
                       <label
-                        htmlFor="city"
+                        htmlFor="thana"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        City <span className="text-red-500"> *</span>
+                        Thana <span className="text-red-500"> *</span>
                       </label>
                       <div className="mt-2">
                         <input
-                          {...register("city", {
-                            required: "City is required",
+                          {...register("thana", {
+                            required: "Thana is required",
                           })}
                           type="text"
-                          name="city"
-                          id="city"
+                          name="thana"
+                          id="thana"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
 
-                    <div className="sm:col-span-2">
+                    <div className="sm:col-span-3">
                       <label
                         htmlFor="phone"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -226,11 +227,54 @@ const CheckoutPage = () => {
                         />
                       </div>
                     </div>
+                    <div className="sm:col-span-full">
+                      <label
+                        htmlFor="address"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Full Address <span className="text-red-500"> *</span>
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          {...register("address", {
+                            required: "Address is required",
+                          })}
+                          type="text"
+                          name="address"
+                          id="address"
+                          placeholder="House number and street name"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                    <div className="sm:col-span-full">
+                      <h2 className="text-2xl">Order Notes (optional)</h2>
+                      <label
+                        htmlFor="orderComments"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Order Notes (optional)
+                      </label>
+                      <div className="mt-2">
+                        <textarea
+                          {...register("orderComments", {
+                            required: "Address is required",
+                          })}
+                          name="orderComments"
+                          className="input-text "
+                          id="orderComments"
+                          placeholder="Notes about your order, e.g. special notes for delivery."
+                          rows="3"
+                          cols="60"
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                   <button
+                    onClick={() => reset()}
                     type="button"
                     className="text-sm font-semibold leading-6 text-gray-900"
                   >
@@ -254,44 +298,49 @@ const CheckoutPage = () => {
 
                   <ul>
                     {user.addresses.map((address, index) => (
-                      <li
-                        key={index}
-                        className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4"
-                      >
-                        <div className="flex min-w-0 gap-x-4 ">
-                          <input
-                            onClick={handleAddress}
-                            value={index}
-                            name="address"
-                            type="radio"
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          />
-                          <div className="min-w-0 flex-auto">
-                            <p className="text-sm font-semibold leading-6 text-gray-900">
-                              {address.firstName} {address.lastName}
+                      <div key={index}>
+                        <div className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4">
+                          <div className="flex min-w-0 gap-x-4 ">
+                            <input
+                              onClick={handleAddress}
+                              value={index}
+                              name="address"
+                              type="radio"
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            />
+                            <div className="min-w-0 flex-auto">
+                              <p className="text-sm font-semibold leading-6 text-gray-900">
+                                {address.name}
+                              </p>
+                              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                {address.email}
+                              </p>
+                              <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                {address.phone}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                            <p className="text-sm leading-6 text-gray-900">
+                              {address.country}
                             </p>
-                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              Email: {address.email}
-                            </p>
-                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              Phone: {address.phone}
+                            <p className="mt-1 text-xs leading-5 text-gray-500">
+                              {address.district}
                             </p>
                           </div>
+                          <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                            <p className="text-sm leading-6 text-gray-900">
+                              {address.thana}
+                            </p>
+                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                              {address.phone}
+                            </p>
+                          </div>
+                        <p className="text-sm leading-6 text-gray-900">
+                          {address.orderComments}
+                        </p>
                         </div>
-                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                          <p className="text-sm leading-6 text-gray-900">
-                            {address.country}
-                          </p>
-                          <p className="mt-1 text-xs leading-5 text-gray-500">
-                            {address.city}
-                          </p>
-                        </div>
-                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                          <p className="text-sm leading-6 text-gray-900">
-                            {address.address}
-                          </p>
-                        </div>
-                      </li>
+                      </div>
                     ))}
                   </ul>
 
