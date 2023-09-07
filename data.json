@@ -2339,8 +2339,27 @@
       "name": "Nayeem",
       "email": "Nayeem@gmail.com",
       "password": "nayeem12!@",
-      "addresses": [],
+      "role": "user",
+      "addresses": [
+        {
+          "name": "Nayeem Mehedi",
+          "country": "Bangladesh",
+          "email": "nayeem@gmail.com",
+          "district": "Dhaka",
+          "thana": "Mother Tek",
+          "phone": "01522105687",
+          "orderComments": "Need Good Product"
+        }
+      ],
       "id": 1
+    },
+    {
+      "name": "Abu Taher",
+      "email": "admin@gmail.com",
+      "password": "admin12!@",
+      "addresses": [],
+      "role": "admin",
+      "id": 2
     }
   ],
   "cart": [],
@@ -2467,6 +2486,61 @@
       "totalItems": 1,
       "status": "pending",
       "id": 2
+    },
+    {
+      "user": {
+        "name": "Nayeem",
+        "email": "Nayeem@gmail.com",
+        "password": "nayeem12!@",
+        "addresses": [
+          {
+            "name": "Nayeem Mehedi",
+            "country": "Bangladesh",
+            "email": "nayeem@gmail.com",
+            "district": "Dhaka",
+            "thana": "Mother Tek",
+            "phone": "01522105687",
+            "orderComments": "Need Good Product"
+          }
+        ],
+        "id": 1
+      },
+      "selectAddress": {
+        "name": "Nayeem Mehedi",
+        "country": "Bangladesh",
+        "email": "nayeem@gmail.com",
+        "district": "Dhaka",
+        "thana": "Mother Tek",
+        "phone": "01522105687",
+        "orderComments": "Need Good Product"
+      },
+      "selectPaymentMthd": "mobileBanking",
+      "cartItems": [
+        {
+          "title": "HP Pavilion 15-DK1056WM",
+          "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+          "price": 1099,
+          "discountPercentage": 6.18,
+          "rating": 4.43,
+          "stock": 89,
+          "brand": "HP Pavilion",
+          "category": "laptops",
+          "thumbnail": "https://i.dummyjson.com/data/products/10/thumbnail.jpeg",
+          "images": [
+            "https://i.dummyjson.com/data/products/10/1.jpg",
+            "https://i.dummyjson.com/data/products/10/2.jpg",
+            "https://i.dummyjson.com/data/products/10/3.jpg",
+            "https://i.dummyjson.com/data/products/10/thumbnail.jpeg"
+          ],
+          "quantity": 1,
+          "user": 1,
+          "id": 1
+        }
+      ],
+      "totalCost": 1099,
+      "totalItems": 1,
+      "status": "pending",
+      "id": 3
     }
   ]
 }

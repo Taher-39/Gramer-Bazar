@@ -1,5 +1,4 @@
 import Home from "./pages/Home";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -16,12 +15,42 @@ import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import { fetchLoggedInUserAsync } from "./features/Users/userSlice";
 import { selectLoggedInuser } from "./features/Auth/AuthSlice";
+import SignOut from "./features/Auth/Components/SignOut";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import AdminHome from "./pages/AdminHome";
+import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
+import ProtectedAdminRoute from "./features/Auth/Components/ProtectedAdminRoute";
+import AboutPage from "./pages/AboutPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedAdminRoute>
+        <AdminHome />
+      </ProtectedAdminRoute>
+    ),
+  },
+  {
+    path: "/admin/products/:id",
+    element: (
+      <ProtectedAdminRoute>
+        <AdminProductDetailsPage />
+      </ProtectedAdminRoute>
+    ),
+  },
+  {
+    path: "/products/:id",
+    element: (
+      <ProtectedAdminRoute>
+        <ProductDetailsPage />
+      </ProtectedAdminRoute>
+    ),
   },
   {
     path: "/login",
@@ -48,14 +77,6 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/products/:id",
-    element: (
-      <ProtectedRoute>
-        <ProductDetailsPage />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "/order-success/:id",
     element: (
       <ProtectedRoute>
@@ -64,7 +85,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/user-orders",
+    path: "/my-orders",
     element: (
       <ProtectedRoute>
         <UserOrdersPage />
@@ -78,6 +99,18 @@ const router = createBrowserRouter([
         <UserProfilePage />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/sign-out",
+    element: <SignOut />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
   },
 ]);
 

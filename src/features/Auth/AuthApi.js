@@ -6,7 +6,7 @@ return new Promise(async (resolve) => {
       headers: { "content-type": "application/json" },
     });
     const data = await response.json();
-    //todo: on server get limited data (not password)
+    //TODO: on server get limited data (not password)
     resolve({ data });
   });
 }
@@ -33,6 +33,12 @@ export function checkUser(loginInfo) {
     } else {
       reject({ message: "User not found" });
     }
+  });
+}
+export function signOut(userId) {
+  return new Promise(async (resolve) => {
+    //TODO: we will remove user session info
+    resolve({data: 'success'})
   });
 }
 

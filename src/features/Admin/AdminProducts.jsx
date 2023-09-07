@@ -7,7 +7,7 @@ import {
   selectAllBrand,
   fetchProductsBrandsAsync,
   fetchProductsCategoryAsync,
-} from "../ProductSlice";
+} from "../productList/ProductSlice";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -22,7 +22,7 @@ import {
   StarIcon,
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../../../app/constant";
+import { ITEM_PER_PAGE } from "../../app/constant";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -34,7 +34,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function Products() {
+export const AdminProducts = () => {
   const products = useSelector(selectAllProduct);
   const category = useSelector(selectAllCategory);
   const brands = useSelector(selectAllBrand);
@@ -203,7 +203,7 @@ export function Products() {
       </div>
     </div>
   );
-}
+};
 
 const MobileFilter = ({
   setMobileFiltersOpen,

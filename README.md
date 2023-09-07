@@ -1,6 +1,6 @@
 # My E-Commarce App Using MERN Start 24/08/2023
 
-This is a paragraph of text. You can **bold** text, *italicize* text, create [links](https://www.example.com), and more.
+This is a paragraph of text. You can **bold** text, *italicize* text, create [links](https://www.grammer-bazar.com.bd), and more.
 
 ## Lists
 
@@ -14,8 +14,10 @@ This is a paragraph of text. You can **bold** text, *italicize* text, create [li
 
 ## Code
 
-You can also write inline code like `print("Hello, World!")` or code blocks:
+You can also write inline code like `console.log("Life is journey from ALLAH to ALLAH!")` or code blocks:
 
-```python
-def greet(name):
-    print("Hello, " + name)
+```React 
+export function Component({name}){
+    const greet = console.log("Hi, " + name)
+    return (<h1>{greet}</h1>)
+}

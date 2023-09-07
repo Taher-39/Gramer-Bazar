@@ -31,6 +31,8 @@ export function SingnUp() {
           email: data.email,
           password: data.password,
           addresses: [],
+          role: 'user'
+          //TODO: this role can be directly given backend 
         })
       );
     }
@@ -60,7 +62,7 @@ export function SingnUp() {
           >
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Name <span className="text-red-500"> *</span>

@@ -8,31 +8,25 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../Cart/CartSlice";
+import { selectLoggedInuser } from "../Auth/AuthSlice";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-hX6v4DM5ifY%2FUfT56hUQSAI%2FAAAAAAAADb0%2FrIj2OyG00gE%2Fs1600%2FVerses%2Bof%2Bthe%2BQuran%2Bin%2BMasjid%2Bal%2BHaram%2B%2B(3).JPG&f=1&nofb=1&ipt=80f3574410b9b7688b24430dabdc31c04a14963eaf4fcab246f0ca9006f5bca1&ipo=images",
-};
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Reports", href: "#", current: false },
+  { name: "Home", link: "/", user: true },
+  { name: "About", link: "/about", user: true },
+  { name: "Admin", link: "/admin", admin: true },
 ];
 
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
-  { name: "My Orders", link: "/user-orders" },
-  { name: "Sign Out", link: "/login" },
+  { name: "My Orders", link: "/my-orders" },
+  { name: "Sign Out", link: "/sign-out" },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = ({ children }) => {
+  const user = useSelector(selectLoggedInuser);
   const cartItems = useSelector(selectCartItems);
   return (
     <div className="min-h-full">
@@ -53,21 +47,23 @@ const Navbar = ({ children }) => {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md px-3 py-2 text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
+                      {navigation.map((item) =>
+                        item[user?.role] ? (
+                          <Link
+                            key={item.name}
+                            to={item.link}
+                            className={classNames(
+                              item.current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "rounded-md px-3 py-2 text-sm font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Link>
+                        ) : null
+                      )}
                     </div>
                   </div>
                 </div>
@@ -100,7 +96,7 @@ const Navbar = ({ children }) => {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full"
-                            src={user.imageUrl}
+                            // src={}
                             alt="User Img"
                           />
                         </Menu.Button>
@@ -172,18 +168,18 @@ const Navbar = ({ children }) => {
               <div className="border-t border-gray-700 pb-3 pt-4">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <img
+                    {/* <img
                       className="h-10 w-10 rounded-full"
                       src={user.imageUrl}
                       alt=""
-                    />
+                    /> */}
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">
-                      {user.name}
+                      {user?.name}
                     </div>
                     <div className="text-sm font-medium leading-none text-gray-400">
-                      {user.email}
+                      {user?.email}
                     </div>
                   </div>
                   <Link to="/cart">
