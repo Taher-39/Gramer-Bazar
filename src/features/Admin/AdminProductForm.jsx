@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearSelectedProduct,
   createProductAsync,
+  fetchProductByIdAsync,
   selectAllBrand,
   selectAllCategory,
   selectProductById,
+  updateProductAsync,
 } from "../productList/ProductSlice";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const AdminProductForm = () => {
-  const dispatch = useDispatch();
-  const params = useParams();
-  const selectProduct = useSelector(selectProductById);
   const {
     register,
     formState: { errors },
@@ -22,27 +22,42 @@ const AdminProductForm = () => {
   } = useForm();
   const category = useSelector(selectAllCategory);
   const brands = useSelector(selectAllBrand);
+  const dispatch = useDispatch();
+  const params = useParams();
+  const selectedProduct = useSelector(selectProductById);
 
   useEffect(() => {
-    dispatch(fetchProductById(params.id));
+    if (params.id) {
+      dispatch(fetchProductByIdAsync(params.id));
+    } else {
+      dispatch(clearSelectedProduct());
+    }
   }, [dispatch, params.id]);
 
   useEffect(() => {
-    if (selectProduct && params.id) {
-      setValue("title", selectProduct.title);
-      setValue("description", selectProduct.description);
-      setValue("price", selectProduct.price);
-      setValue("stock", selectProduct.stock);
-      setValue("discountPercentage", selectProduct.discountPercentage);
-      setValue("category", selectProduct.category);
-      setValue("brand", selectProduct.brand);
-      setValue("thumbnail", selectProduct.thumbnail);
-      setValue("image1", selectProduct.image1);
-      setValue("image2", selectProduct.image2);
-      setValue("image3", selectProduct.image3);
-    }
-  }, [dispatch, params.id, setValue]);
+    if (selectedProduct && params.id) {
+      setValue("title", selectedProduct.title);
+      setValue("description", selectedProduct.description);
+      setValue("price", selectedProduct.price);
+      setValue("stock", selectedProduct.stock);
+      setValue("discountPercentage", selectedProduct.discountPercentage);
+      setValue("category", selectedProduct.category);
+      setValue("brand", selectedProduct.brand);
+      setValue("thumbnail", selectedProduct.thumbnail);
 
+      if (selectedProduct.images) {
+        setValue("image1", selectedProduct.images[0]);
+        setValue("image2", selectedProduct.images[1]);
+        setValue("image3", selectedProduct.images[2]); 
+      }
+    }
+  }, [dispatch, setValue, selectedProduct, params.id]);
+
+  const handleDelete = () => {
+    const product = { ...selectedProduct };
+    product.deleted = true;
+    dispatch(updateProductAsync(product));
+  };
   return (
     <>
       <form
@@ -59,8 +74,20 @@ const AdminProductForm = () => {
           delete product["image1"];
           delete product["image2"];
           delete product["image3"];
-          dispatch(createProductAsync(product));
-          reset();
+          product.price = +product.price;
+          product.stock = +product.stock;
+          product.discountPercentage = +product.discountPercentage;
+
+          if (params.id) {
+            product.id = params.id;
+            product.rating = selectedProduct.rating || 0;
+            dispatch(updateProductAsync(product));
+            reset();
+          } else {
+            dispatch(createProductAsync(product));
+            reset();
+            //TODO: after add new product see added message
+          }
         })}
       >
         <div className="space-y-12 p-12 bg-slate-100">
@@ -85,6 +112,7 @@ const AdminProductForm = () => {
                         required: "Title is required",
                       })}
                       id="title"
+                      name="title"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="title"
                     />
@@ -107,7 +135,7 @@ const AdminProductForm = () => {
                     })}
                     rows={3}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
+                    placeholder="Product description add here."
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -299,8 +327,10 @@ const AdminProductForm = () => {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option value="">--Choice Category--</option>
-                    {category.map((item) => (
-                      <option value={item.value}>{item.label}</option>
+                    {category.map((item, index) => (
+                      <option key={index} value={item.value}>
+                        {item.label}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -321,8 +351,10 @@ const AdminProductForm = () => {
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option value="">--Choice Brand--</option>
-                    {brands.map((brand) => (
-                      <option value={brand.value}>{brand.label}</option>
+                    {brands.map((brand, index) => (
+                      <option key={index} value={brand.value}>
+                        {brand.label}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -336,8 +368,17 @@ const AdminProductForm = () => {
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
-            Cancel
+            <Link to="/admin">Cancel</Link>
           </button>
+          {selectedProduct && (
+            <button
+              onClick={handleDelete}
+              type="submit"
+              className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            >
+              Delete
+            </button>
+          )}
           <button
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

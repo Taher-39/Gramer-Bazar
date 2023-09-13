@@ -30,7 +30,6 @@ const sortOptions = [
   { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -80,7 +79,6 @@ export function Products() {
 
   const handleSort = (option) => {
     const newSort = { _sort: option.sort, _order: option.order };
-    // console.log({sort})
     setSort(newSort);
   };
   const handlePage = (page) => {
@@ -90,6 +88,7 @@ export function Products() {
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
+    // TODO: server will filter deleted product
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -426,6 +425,9 @@ const ProductGrid = ({ products }) => {
                       </p>
                     </div>
                   </div>
+                  {product.deleted && (
+                    <p className="text-small text-red-400">Deleted Product</p>
+                  )}
                 </div>
               </Link>
             ))}

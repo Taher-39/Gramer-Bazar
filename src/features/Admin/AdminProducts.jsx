@@ -435,6 +435,9 @@ const ProductGrid = ({ products }) => {
                         </p>
                       </div>
                     </div>
+                    {product.deleted && (
+                      <p className="text-small text-red-400">Deleted Product</p>
+                    )}
                   </div>
                 </Link>
                 <Link
