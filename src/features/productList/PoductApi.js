@@ -1,3 +1,15 @@
+export function createProduct(product) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:4000/products", {
+      method: "POST",
+      body: JSON.stringify(product),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
 export function fetchAllProducts() {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {
@@ -10,7 +22,7 @@ export function fetchAllProducts() {
 export function fetchProductById(id) {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/products/"+id);
+    const response = await fetch("http://localhost:4000/products/" + id);
     const data = await response.json();
     resolve({ data });
   });
@@ -43,10 +55,9 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     );
     const data = await response.json();
     const totalItems = await response.headers.get("X-Total-Count");
-    resolve({ data: { products: data, totalItems:+totalItems } });
+    resolve({ data: { products: data, totalItems: +totalItems } });
   });
 }
-
 
 export function fetchProductsCategory() {
   // todo: we will not hard code server url here

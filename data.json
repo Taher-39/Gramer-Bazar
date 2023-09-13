@@ -1829,7 +1829,7 @@
       "discountPercentage": 16,
       "rating": 4.74,
       "stock": 133,
-      "brand": "YIOSI",
+      "brand": "YIOSI", 
       "category": "lighting",
       "thumbnail": "https://i.dummyjson.com/data/products/100/thumbnail.jpg",
       "images": [
@@ -1838,6 +1838,24 @@
         "https://i.dummyjson.com/data/products/100/3.jpg",
         "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
       ]
+    },
+    {
+      "title": "HP ProBook 450 G5 Notebook",
+      "description": "HP ProBook 450 G5 Notebook i5 11gen 250ssd 1tera hard drive and more ",
+      "price": "98900",
+      "discountPercentage": "2",
+      "stock": "10",
+      "thumbnail": "https://www.startech.com.bd/image/cache/catalog/laptop/hp-laptop/450-g5/hp-450-g5-1-500x500.jpg",
+      "category": "laptops",
+      "brand": "HP Pavilion",
+      "images": [
+        "https://www.startech.com.bd/image/cache/catalog/laptop/hp-laptop/450-g5/hp-450-g5-2-500x500.jpg",
+        "https://www.startech.com.bd/image/cache/catalog/laptop/hp-laptop/450-g5/hp-450-g5-3-500x500.jpg",
+        "https://www.startech.com.bd/image/cache/catalog/laptop/hp-laptop/450-g5/hp-450-g5-4-500x500.jpg",
+        "https://www.startech.com.bd/image/cache/catalog/laptop/hp-laptop/450-g5/hp-450-g5-1-500x500.jpg"
+      ],
+      "rating": 0,
+      "id": 101
     }
   ],
   "category": [

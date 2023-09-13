@@ -73,13 +73,11 @@ export const AdminProducts = () => {
       );
       newFilter[section.id].splice(index, 1);
     }
-    // console.log({newFilter});
     setFilter(newFilter);
   };
 
   const handleSort = (option) => {
     const newSort = { _sort: option.sort, _order: option.order };
-    // console.log({sort})
     setSort(newSort);
   };
   const handlePage = (page) => {
@@ -189,7 +187,15 @@ export const AdminProducts = () => {
               {/* Filters */}
               <WebFilter filters={filters} handleFilter={handleFilter} />
               {/* Product grid start */}
-              <ProductGrid products={products} />
+              <div className="lg:col-span-3">
+                <Link
+                  to="/admin/add-product"
+                  className="flex  justify-center mx-10 rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                >
+                  Add New Product
+                </Link>
+                <ProductGrid products={products} />
+              </div>
             </div>
           </section>
           {/* pagination start */}
@@ -387,46 +393,57 @@ const ProductGrid = ({ products }) => {
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             {products.map((product) => (
-              <Link to={`/products/${product.id}`} key={product.id}>
-                <div className="group relative border-solid border-2 border-gray-200 p-3 rounded">
-                  <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <h3 className="text-sm text-gray-700">
-                        <div href={product.thumbnail}>
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-0"
-                          />
-                          {product.title}
-                        </div>
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-500">
-                        <StarIcon className="w-6 h-6 inline" />
-                        <span className="align-bottom"> {product.rating}</span>
-                      </p>
+              <div key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                  <div className="group relative border-solid border-2 border-gray-200 p-3 rounded">
+                    <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
+                      <img
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                      />
                     </div>
-                    <div className="">
-                      <p className="text-sm font-medium text-gray-900">
-                        ৳{product.price}
-                      </p>
-                      <p className="text-sm font-medium text-gray-400 line-through">
-                        ৳
-                        {Math.round(
-                          (product.price * 100) /
-                            (100 - product.discountPercentage)
-                        )}
-                      </p>
+                    <div className="mt-4 flex justify-between">
+                      <div>
+                        <h3 className="text-sm text-gray-700">
+                          <div href={product.thumbnail}>
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-0"
+                            />
+                            {product.title}
+                          </div>
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-500">
+                          <StarIcon className="w-6 h-6 inline" />
+                          <span className="align-bottom">
+                            {" "}
+                            {product.rating}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="">
+                        <p className="text-sm font-medium text-gray-900">
+                          ৳{product.price}
+                        </p>
+                        <p className="text-sm font-medium text-gray-400 line-through">
+                          ৳
+                          {Math.round(
+                            (product.price * 100) /
+                              (100 - product.discountPercentage)
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+                <Link
+                  to={`/admin/product/edit/${product.id}`}
+                  className="flex w-full mt-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Edit Product
+                </Link>
+              </div>
             ))}
           </div>
         </div>

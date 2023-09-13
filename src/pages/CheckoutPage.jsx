@@ -260,12 +260,9 @@ const CheckoutPage = () => {
                           {...register("orderComments", {
                             required: "Address is required",
                           })}
-                          name="orderComments"
-                          className="input-text "
                           id="orderComments"
                           placeholder="Notes about your order, e.g. special notes for delivery."
-                          rows="3"
-                          cols="60"
+                          class="w-full px-3 py-2 border rounded-lg rows-3 md:rows-4 cols-60 md:cols-40 sm:rows-3 sm:cols-15"
                         ></textarea>
                       </div>
                     </div>
@@ -336,9 +333,9 @@ const CheckoutPage = () => {
                               {address.phone}
                             </p>
                           </div>
-                        <p className="text-sm leading-6 text-gray-900">
-                          {address.orderComments}
-                        </p>
+                          <p className="text-sm leading-6 text-gray-900">
+                            {address.orderComments}
+                          </p>
                         </div>
                       </div>
                     ))}
