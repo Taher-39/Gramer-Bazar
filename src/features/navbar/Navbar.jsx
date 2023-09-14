@@ -11,9 +11,9 @@ import { selectCartItems } from "../Cart/CartSlice";
 import { selectLoggedInuser } from "../Auth/AuthSlice";
 
 const navigation = [
-  { name: "Home", link: "/", user: true },
+  { name: "Products", link: "/", user: true },
   { name: "About", link: "/about", user: true },
-  { name: "Admin", link: "/admin", admin: true },
+  { name: "Products", link: "/admin", admin: true },
   { name: "Orders", link: "/admin/orders", admin: true },
 ];
 

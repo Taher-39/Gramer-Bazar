@@ -4,7 +4,7 @@ import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { Link, useParams } from "react-router-dom";
-import { AddToCartAsync } from "../../Cart/CartSlice";
+import { AddToCartAsync, selectCartItems } from "../../Cart/CartSlice";
 import { selectLoggedInuser } from "../../Auth/AuthSlice";
 
 const breadcrumbs = [
@@ -43,21 +43,31 @@ export default function ProductDetails() {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const product = useSelector(selectProductById);
   const user = useSelector(selectLoggedInuser);
+  const items = useSelector(selectCartItems);
   const params = useParams();
   const dispatch = useDispatch();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: 1, user: user.id }
-    delete newItem['id']
-    dispatch(AddToCartAsync(newItem));
-    showConfirmationMessage();
+    if (items.findIndex((item) => item.productId === product.id) < 0) {
+      const newItem = {
+        ...product,
+        productId: product.id,
+        quantity: 1,
+        user: user.id,
+      };
+      delete newItem["id"];
+      dispatch(AddToCartAsync(newItem));
+      showConfirmationMessage();
+    } else {
+      console.log("product already added");
+    }
   };
   const showConfirmationMessage = () => {
     setIsAddedToCart(true);
     setTimeout(() => {
       setIsAddedToCart(false);
-    }, 1000); 
+    }, 1000);
   };
 
   useEffect(() => {
@@ -72,9 +82,7 @@ export default function ProductDetails() {
     <div className="bg-white mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
+          <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
@@ -229,9 +237,7 @@ export default function ProductDetails() {
               <div className="mt-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <p
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
+                  <p className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
                   </p>
                 </div>
@@ -312,12 +318,13 @@ export default function ProductDetails() {
               >
                 Add To Cart
               </button>
+
               <Link
-                to='/'
+                to="/"
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                Home  
+                Home
               </Link>
             </form>
             {isAddedToCart && (

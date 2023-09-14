@@ -8,7 +8,12 @@ import {
   updateOrderAsync,
 } from "../Order/orderSlice";
 import { ITEM_PER_PAGE } from "../../app/constant";
-import { XMarkIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
+import {
+  XMarkIcon,
+  PencilSquareIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+} from "@heroicons/react/20/solid";
 import Pagination from "../Common/Pagination";
 
 const AdminOrders = () => {
@@ -18,12 +23,7 @@ const AdminOrders = () => {
   const totalOrders = useSelector(selectTotalOrders);
   const statusError = useSelector(selectOrderStatusError);
   const [editableOrderId, setEditableOrderId] = useState(-1);
-
-  const handlePage = (page) => {
-    setPage(page);
-    const pagination = { _page: page, _limit: ITEM_PER_PAGE };
-    dispatch(fetchAllOrdersAsync(pagination));
-  };
+  const [sort, setSort] = useState({});
 
   const handleShow = (e, order) => {
     console.log("show");
@@ -62,39 +62,72 @@ const AdminOrders = () => {
         return "bg-purple-200 text-purple-600";
     }
   };
+  const handlePage = (page) => {
+    setPage(page);
+  };
+  const handleSort = (sortOption) => {
+    const newSort = { _sort: sortOption.sort, _order: sortOption.order };
+    setSort(newSort);
+  };
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
-    dispatch(fetchAllOrdersAsync(pagination));
-  }, [dispatch, page]);
+    dispatch(fetchAllOrdersAsync({ sort, pagination }));
+  }, [dispatch, page, sort]);
 
   return (
     <>
       {statusError && <p className="text-red-400">{statusError.message}</p>}
       <div className="overflow-x-auto">
-        <div className=" bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+        <div className="flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
           <div className="w-full ">
             <div className="bg-white shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-left">
-                      User
+                    <th
+                      className="py-3 px-6  text-left cursor-pointer"
+                      onClick={(e) =>
+                        handleSort({
+                          sort: "id",
+                          order: sort?._order === "asc" ? "desc" : "asc",
+                        })
+                      }
+                    >
+                      Order
+                      {/* {
+                        (sort._sort =
+                          "id" &&
+                          (sort._order === "asc" ? (
+                            <ArrowUpIcon className="w-4 l-4 inline ml-2"></ArrowUpIcon>
+                          ) : (
+                            <ArrowDownIcon className="w-4 l-4 inline ml-2"></ArrowDownIcon>
+                          )))
+                      } */}
                     </th>
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-left">
-                      Total Items
-                    </th>
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-left">
+                    <th className="py-3 px-6  text-left">Total Items</th>
+                    <th
+                      className="py-3 px-6  text-left cursor-pointer"
+                      onClick={(e) =>
+                        handleSort({
+                          sort: "totalCost",
+                          order: sort._order === "asc" ? "desc" : "asc",
+                        })
+                      }
+                    >
                       Total Cost
+                      {/* {
+                        (sort._sort =
+                          "totalCost" &&
+                          (sort._order === "asc" ? (
+                            <ArrowUpIcon className="w-4 l-4 inline ml-2"></ArrowUpIcon>
+                          ) : (
+                            <ArrowDownIcon className="w-4 l-4 inline ml-2"></ArrowDownIcon>
+                          )))
+                      } */}
                     </th>
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-center">
-                      Shipping Address
-                    </th>
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-center">
-                      Status
-                    </th>
-                    <th className="py-3 lg:px-6 md:px-4 sm:px-2 text-center">
-                      ACTION
-                    </th>
+                    <th className="py-3 px-6  text-center">Shipping Address</th>
+                    <th className="py-3 px-6  text-center">Status</th>
+                    <th className="py-3 px-6  text-center">ACTION</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">

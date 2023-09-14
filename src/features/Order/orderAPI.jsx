@@ -10,8 +10,12 @@ export function createOrder(order) {
   });
 }
 
-export function fetchAllOrders(pagination) {
+export function fetchAllOrders(sort, pagination) {
   let queryString = "";
+
+  for (let key in sort) {
+    queryString += `${key}=${sort[key]}&`;
+  }
 
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
@@ -28,14 +32,11 @@ export function fetchAllOrders(pagination) {
 export function updateOrder(order) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(
-        "http://localhost:4000/orders/" + order.id,
-        {
-          method: "PATCH",
-          body: JSON.stringify(order),
-          headers: { "content-type": "application/json" },
-        }
-      );
+      const response = await fetch("http://localhost:4000/orders/" + order.id, {
+        method: "PATCH",
+        body: JSON.stringify(order),
+        headers: { "content-type": "application/json" },
+      });
 
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);

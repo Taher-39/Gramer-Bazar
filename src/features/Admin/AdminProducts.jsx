@@ -438,6 +438,9 @@ const ProductGrid = ({ products }) => {
                     {product.deleted && (
                       <p className="text-small text-red-400">Deleted Product</p>
                     )}
+                    {product.stock <= 0 && (
+                      <p className="text-small text-red-400">Out Of Stock</p>
+                    )}
                   </div>
                 </Link>
                 <Link
