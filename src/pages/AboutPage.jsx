@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Navbar from "../features/navbar/Navbar";
 
 const AboutPage = () => {
   return (

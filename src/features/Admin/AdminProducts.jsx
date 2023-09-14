@@ -96,7 +96,7 @@ export const AdminProducts = () => {
   useEffect(() => {
     dispatch(fetchProductsBrandsAsync());
     dispatch(fetchProductsCategoryAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="bg-white">

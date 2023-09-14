@@ -2439,7 +2439,7 @@
       ],
       "totalCost": 2697,
       "totalItems": 3,
-      "status": "pending",
+      "status": "delivered",
       "id": 1
     },
     {
@@ -2560,7 +2560,7 @@
       ],
       "totalCost": 1099,
       "totalItems": 1,
-      "status": "pending",
+      "status": "cancel",
       "id": 3
     }
   ]
