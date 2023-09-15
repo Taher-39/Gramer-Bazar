@@ -6,6 +6,7 @@ import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { Link, useParams } from "react-router-dom";
 import { AddToCartAsync, selectCartItems } from "../../Cart/CartSlice";
 import { selectLoggedInuser } from "../../Auth/AuthSlice";
+import { useAlert } from "react-alert";
 
 const breadcrumbs = [
   { id: 1, name: "Men", href: "#" },
@@ -40,12 +41,12 @@ function classNames(...classes) {
 export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
   const product = useSelector(selectProductById);
   const user = useSelector(selectLoggedInuser);
   const items = useSelector(selectCartItems);
   const params = useParams();
   const dispatch = useDispatch();
+  const alert = useAlert();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -58,16 +59,11 @@ export default function ProductDetails() {
       };
       delete newItem["id"];
       dispatch(AddToCartAsync(newItem));
-      showConfirmationMessage();
+      // TODO: here some need delay from server
+      alert.success("Product Added Successfully");
     } else {
-      console.log("product already added");
+      alert.error("Product Already Added");
     }
-  };
-  const showConfirmationMessage = () => {
-    setIsAddedToCart(true);
-    setTimeout(() => {
-      setIsAddedToCart(false);
-    }, 1000);
   };
 
   useEffect(() => {
@@ -327,12 +323,6 @@ export default function ProductDetails() {
                 Home
               </Link>
             </form>
-            {isAddedToCart && (
-              <div className="fixed top-0 right-0 mt-4 mr-4 p-2 bg-green-500 text-white rounded shadow-lg">
-                <p className="text-lg font-semibold">Item added to cart!</p>
-                <p className="text-sm">Continue shopping or go to the cart.</p>
-              </div>
-            )}
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
