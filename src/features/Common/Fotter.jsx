@@ -6,6 +6,7 @@ import {
   FaLinkedin,
   FaPhoneSquare,
 } from "react-icons/fa";
+import { HiOutlineMailOpen } from "react-icons/hi";
 
 function Footer() {
   return (
@@ -21,6 +22,7 @@ function Footer() {
               </span>
               0124578996
             </div>
+            <p className="my-2"><HiOutlineMailOpen color="yellow" className="inline" /> help@gramer.bazer</p>
           </div>
           <div className="col-span-1 mx-10">
             <h2 className="text-xl font-semibold mb-4">Customer Service</h2>

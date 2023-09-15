@@ -53,7 +53,8 @@
         "https://www.slashgear.com/wp-content/uploads/2018/03/samsung-galaxy-s9-13-980x620.jpg",
         "https://hamariweb.com/mobiles/LargeImages/4121_01.jpg",
         "https://i.dummyjson.com/data/products/3/thumbnail.jpg"
-      ]
+      ],
+      "deleted": true
     },
     {
       "id": 4,
@@ -89,7 +90,8 @@
         "https://i.dummyjson.com/data/products/5/1.jpg",
         "https://i.dummyjson.com/data/products/5/2.jpg",
         "https://i.dummyjson.com/data/products/5/3.jpg"
-      ]
+      ],
+      "deleted": true
     },
     {
       "id": 6,
@@ -2412,27 +2414,6 @@
       "quantity": 1,
       "user": 1,
       "id": 5
-    },
-    {
-      "title": "iPhone X",
-      "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-      "price": 899,
-      "discountPercentage": 17.94,
-      "rating": 4.44,
-      "stock": 34,
-      "brand": "Apple",
-      "category": "smartphones",
-      "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-      "images": [
-        "https://i.dummyjson.com/data/products/2/1.jpg",
-        "https://i.dummyjson.com/data/products/2/2.jpg",
-        "https://i.dummyjson.com/data/products/2/3.jpg",
-        "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-      ],
-      "productId": 2,
-      "quantity": 1,
-      "user": 3,
-      "id": 6
     }
   ],
   "orders": [

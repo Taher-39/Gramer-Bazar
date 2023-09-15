@@ -11,6 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Modal from "../Common/Modal";
 
 const AdminProductForm = () => {
   const {
@@ -48,12 +49,12 @@ const AdminProductForm = () => {
       if (selectedProduct.images) {
         setValue("image1", selectedProduct.images[0]);
         setValue("image2", selectedProduct.images[1]);
-        setValue("image3", selectedProduct.images[2]); 
+        setValue("image3", selectedProduct.images[2]);
       }
     }
   }, [dispatch, setValue, selectedProduct, params.id]);
 
-  const handleDelete = () => {
+  const handleConfirmDelete = (selectedProduct) => {
     const product = { ...selectedProduct };
     product.deleted = true;
     dispatch(updateProductAsync(product));
@@ -95,6 +96,9 @@ const AdminProductForm = () => {
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Add New Product
             </h2>
+            {selectedProduct.deleted && (
+              <p className="text-red-400">Product Is Deleted</p>
+            )}
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
@@ -370,14 +374,8 @@ const AdminProductForm = () => {
           >
             <Link to="/admin">Cancel</Link>
           </button>
-          {selectedProduct && (
-            <button
-              onClick={handleDelete}
-              type="submit"
-              className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-            >
-              Delete
-            </button>
+          {selectedProduct && !selectedProduct.deleted && (
+            <Modal item={selectedProduct} onConfirm={handleConfirmDelete} />
           )}
           <button
             type="submit"

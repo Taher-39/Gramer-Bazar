@@ -28,7 +28,7 @@ const Modal = ({ item, onConfirm }) => {
       {isAlertOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white w-96 p-4 rounded shadow-lg text-center">
-            <p>Are you sure you want to remove this?</p>
+            <p>Are you sure you want to remove {item.title}?</p>
             <div className="mt-4">
               <button
                 onClick={confirmRemoveItem}

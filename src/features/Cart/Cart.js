@@ -3,13 +3,17 @@ import { Link, Navigate } from "react-router-dom";
 import {
   RemoveCartItemAsync,
   UpdateCartAsync,
+  selectCartError,
   selectCartItems,
 } from "./CartSlice";
 import CartItemDeleteAlert from "../Modal/CartItemDeleteAlert";
+import Modal from "../Common/Modal";
 
 export function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
+  const cartRemoveError = useSelector(selectCartError);
+
   const totalCost = cartItems.reduce(
     (amount, item) => item.quantity * item.price + amount,
     0
@@ -24,8 +28,18 @@ export function Cart() {
     dispatch(UpdateCartAsync({ ...item, quantity: +e.target.value }));
   };
 
-  const handleConfirmDelete = (deletedItem) => {
-    dispatch(RemoveCartItemAsync(deletedItem.id));
+  const handleConfirmDelete = (item) => {
+    dispatch(RemoveCartItemAsync(item.id))
+      .unwrap()
+      .then((result) => {
+        if (RemoveCartItemAsync.fulfilled.match(result)) {
+          // Item was successfully removed
+          console.log(`Item with ID ${result.payload.id} removed.`);
+        } else {
+          // Handle the case where removal failed
+          console.error("Failed to remove item.");
+        }
+      });
   };
 
   return (
@@ -37,6 +51,9 @@ export function Cart() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 py-8">
             Cart
           </h1>
+          {cartRemoveError && (
+            <p className="text-red-400">{cartRemoveError.message}</p>
+          )}
           <div className="flow-root">
             <ul className="-my-6 divide-y divide-gray-200">
               {cartItems.map((item) => (
@@ -94,7 +111,7 @@ export function Cart() {
                       </div>
 
                       <div className="flex">
-                        <CartItemDeleteAlert
+                        <Modal
                           item={item}
                           onConfirm={handleConfirmDelete}
                         />
