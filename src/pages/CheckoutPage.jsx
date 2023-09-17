@@ -7,7 +7,6 @@ import {
   selectCartItems,
 } from "../features/Cart/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import CartItemDeleteAlert from "../features/Modal/CartItemDeleteAlert";
 import { useForm } from "react-hook-form";
 import { updateUserAsync } from "../features/Auth/AuthSlice";
 import {
@@ -15,6 +14,7 @@ import {
   selectCurrentOrder,
 } from "../features/Order/orderSlice";
 import { selectUserInfo } from "../features/Users/userSlice";
+import Modal from "../features/Common/Modal";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -473,7 +473,7 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="flex">
-                              <CartItemDeleteAlert
+                              <Modal
                                 item={item}
                                 onConfirm={handleConfirmDelete}
                               />

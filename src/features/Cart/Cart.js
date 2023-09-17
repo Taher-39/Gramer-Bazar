@@ -6,7 +6,6 @@ import {
   selectCartError,
   selectCartItems,
 } from "./CartSlice";
-import CartItemDeleteAlert from "../Modal/CartItemDeleteAlert";
 import Modal from "../Common/Modal";
 
 export function Cart() {
