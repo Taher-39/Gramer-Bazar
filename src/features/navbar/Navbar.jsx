@@ -17,18 +17,20 @@ const navigation = [
   { name: "Orders", link: "/admin/orders", admin: true },
 ];
 
-const userNavigation = [
-  { name: "My Profile", link: "/profile" },
-  { name: "My Orders", link: "/my-orders" },
-  { name: "Sign Out", link: "/sign-out" },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = ({ children }) => {
   const user = useSelector(selectLoggedInuser);
   const cartItems = useSelector(selectCartItems);
+  const userNavigation = [
+    { name: "My Profile", link: "/profile" },
+    { name: "My Orders", link: "/my-orders" },
+    {
+      name: user?.email ? "Sign-Out" : "Sign-In",
+      link: user?.email ? "/sign-out" : "/login",
+    },
+  ];
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -43,7 +45,6 @@ const Navbar = ({ children }) => {
                         className="h-8 w-8 bg-purple-100"
                         src="bag.png"
                         alt="Your Company"
-
                       />
                     </Link>
                   </div>

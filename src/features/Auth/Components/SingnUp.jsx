@@ -2,14 +2,11 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { createUserAsync, selectError, selectLoggedInuser } from "../AuthSlice";
-import { checkIfEmailExists } from "../AuthApi";
-import { useState } from "react";
 
 export function SingnUp() {
   const user = useSelector(selectLoggedInuser);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
-  const [emailExistsError, setEmailExistsError] = useState(false);
 
   const {
     register,
@@ -18,24 +15,16 @@ export function SingnUp() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const emailExists = await checkIfEmailExists(data.email);
-
-    if (emailExists) {
-      setEmailExistsError(true);
-      return;
-    } else {
-      setEmailExistsError(false);
-      dispatch(
-        createUserAsync({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          addresses: [],
-          role: 'user'
-          //TODO: this role can be directly given backend 
-        })
-      );
-    }
+    dispatch(
+      createUserAsync({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        addresses: [],
+        role: "user",
+        //TODO: this role can be directly given backend
+      })
+    );
   };
 
   return (
@@ -187,11 +176,6 @@ export function SingnUp() {
               >
                 Singn Up
               </button>
-              {emailExistsError && (
-                <p className="text-red-500 mt-2">
-                  Email already exists. Please use a different email
-                </p>
-              )}
               {error && (
                 <p className="text-red-500 mt-2">{error.message} Thank You.</p>
               )}
