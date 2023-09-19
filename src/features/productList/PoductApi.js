@@ -1,6 +1,6 @@
 export function createProduct(product) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/api/products", {
+    const response = await fetch("http://localhost:4000/products", {
       method: "POST",
       body: JSON.stringify(product),
       headers: { "content-type": "application/json" },
@@ -13,9 +13,9 @@ export function createProduct(product) {
 export function fetchAllProducts() {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/api/products");
+    const response = await fetch("http://localhost:4000/products");
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     resolve({ data });
   });
 }
@@ -74,7 +74,7 @@ export function fetchProductsCategory() {
 export function fetchProductsBrands() {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/brands");
+    const response = await fetch("http://localhost:4000/brand");
     const data = await response.json();
     resolve({ data });
   });

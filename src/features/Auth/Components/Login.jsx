@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Navigate} from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { checkUserAsync, selectError, selectLoggedInuser } from "../AuthSlice";
 
 export function Login() {
@@ -81,7 +81,7 @@ export function Login() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    to='/forgot-password'
+                    to="/forgot-password"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
