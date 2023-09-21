@@ -15,6 +15,7 @@ import {
 } from "../features/Order/orderSlice";
 import { selectUserInfo } from "../features/Users/userSlice";
 import Modal from "../features/Common/Modal";
+import { useAlert } from "react-alert";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -23,19 +24,22 @@ const CheckoutPage = () => {
   const [selectAddress, setSelectAddress] = useState(null);
   const [selectPaymentMthd, setSelectPaymentMthd] = useState("mobileBanking");
   const cartItems = useSelector(selectCartItems);
+  const alert = useAlert();
+
   const totalCost = cartItems.reduce(
-    (amount, item) => item.quantity * item.price + amount,
+    (amount, item) => item.quantity * item.product.price + amount,
     0
   );
   const totalItems = cartItems.reduce(
     (total, item) => item.quantity + total,
     0
   );
+
   const { register, reset, handleSubmit } = useForm();
 
   const handleQuantity = (e, item) => {
     e.preventDefault();
-    dispatch(UpdateCartAsync({ ...item, quantity: +e.target.value }));
+    dispatch(UpdateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
   const handleConfirmDelete = (item) => {
     dispatch(RemoveCartItemAsync(item.id));
@@ -43,7 +47,7 @@ const CheckoutPage = () => {
 
   const onSubmit = (data) => {
     dispatch(
-      updateUserAsync({ ...user, addresses: [...user.addresses, data] })
+      updateUserAsync({ ...user, address: [...user.addresses, data] })
     );
     reset();
   };
@@ -65,15 +69,15 @@ const CheckoutPage = () => {
           cartItems,
           totalCost,
           totalItems,
-          status: "pending", //status chang admin like delivered, received
+          status: "pending",
         })
       );
     } else {
-      alert("Enter Address or Payment Method");
+      alert.error("Enter Address or Payment Method");
     }
     // TODO: redirect oredr success page, change stock, clear cart after order
   };
-
+  console.log("user from CheckoutPage", user);
   return (
     <>
       {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
@@ -294,7 +298,7 @@ const CheckoutPage = () => {
                   </p>
 
                   <ul>
-                    {user.addresses.map((address, index) => (
+                    {user?.addresses?.map((address, index) => (
                       <div key={index}>
                         <div className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4">
                           <div className="flex min-w-0 gap-x-4 ">
@@ -421,8 +425,8 @@ const CheckoutPage = () => {
                       <li key={index} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={item.thumbnail}
-                            alt={item.title}
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -431,19 +435,19 @@ const CheckoutPage = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <p>{item.titile}</p>
+                                <p>{item.product.titile}</p>
                               </h3>
-                              <p className="ml-4">৳ {item.price}</p>
+                              <p className="ml-4">৳ {item.product.price}</p>
                             </div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <p className="mt-1 text-sm text-gray-500">
-                                {item.brand}
+                                {item.product.brand}
                               </p>
                               <p className="text-sm font-medium text-gray-400 line-through">
                                 ৳
                                 {Math.round(
-                                  (item.price * 100) /
-                                    (100 - item.discountPercentage)
+                                  (item.product.price * 100) /
+                                    (100 - item.product.discountPercentage)
                                 )}
                               </p>
                             </div>
@@ -474,7 +478,7 @@ const CheckoutPage = () => {
 
                             <div className="flex">
                               <Modal
-                                item={item}
+                                item={item.product}
                                 onConfirm={handleConfirmDelete}
                               />
                             </div>

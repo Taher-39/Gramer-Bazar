@@ -84,6 +84,10 @@ export const CartSlice = createSlice({
         );
         state.items[index] = action.payload;
       })
+      .addCase(UpdateCartAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
+      })
       .addCase(RemoveCartItemAsync.pending, (state) => {
         state.status = "loading";
       })

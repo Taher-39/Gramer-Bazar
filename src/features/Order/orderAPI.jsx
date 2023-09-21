@@ -9,7 +9,7 @@ export function createOrder(order) {
     resolve({ data });
   });
 }
-
+// fetch order with query id
 export function fetchAllOrders(sort, pagination) {
   let queryString = "";
 
@@ -28,7 +28,7 @@ export function fetchAllOrders(sort, pagination) {
     resolve({ data: { orders: data, totalOrders: +totalOrders } });
   });
 }
-
+// update order with params id
 export function updateOrder(order) {
   return new Promise(async (resolve, reject) => {
     try {

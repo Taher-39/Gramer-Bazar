@@ -7,14 +7,15 @@ import {
   selectCartItems,
 } from "./CartSlice";
 import Modal from "../Common/Modal";
+import { useState } from "react";
 
 export function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-  const cartRemoveError = useSelector(selectCartError);
+  const cartError = useSelector(selectCartError);
 
   const totalCost = cartItems.reduce(
-    (amount, item) => item.quantity * item.price + amount,
+    (amount, item) => item.quantity * item.product.price + amount,
     0
   );
   const totalItems = cartItems.reduce(
@@ -24,7 +25,7 @@ export function Cart() {
 
   const handleQuantity = (e, item) => {
     e.preventDefault();
-    dispatch(UpdateCartAsync({ ...item, quantity: +e.target.value }));
+    dispatch(UpdateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
 
   const handleConfirmDelete = (item) => {
@@ -50,17 +51,15 @@ export function Cart() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 py-8">
             Cart
           </h1>
-          {cartRemoveError && (
-            <p className="text-red-400">{cartRemoveError.message}</p>
-          )}
+          {cartError && <p className="text-red-400">{cartError.message}</p>}
           <div className="flow-root">
             <ul className="-my-6 divide-y divide-gray-200">
               {cartItems.map((item) => (
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
-                      src={item.thumbnail}
-                      alt={item.title}
+                      src={item.product.thumbnail}
+                      alt={item.product.title}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
@@ -69,18 +68,19 @@ export function Cart() {
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <p>{item.title}</p>
+                          <p>{item.product.title}</p>
                         </h3>
-                        <p className="ml-4">৳ {item.price}</p>
+                        <p className="ml-4">৳ {item.product.price}</p>
                       </div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p className="mt-1 text-sm text-gray-500">
-                          {item.brand}
+                          {item.product.brand}
                         </p>
                         <p className="text-sm font-medium text-gray-400 line-through">
                           ৳
                           {Math.round(
-                            (item.price * 100) / (100 - item.discountPercentage)
+                            (item.product.price * 100) /
+                              (100 - item.product.discountPercentage)
                           )}
                         </p>
                       </div>
@@ -110,10 +110,7 @@ export function Cart() {
                       </div>
 
                       <div className="flex">
-                        <Modal
-                          item={item}
-                          onConfirm={handleConfirmDelete}
-                        />
+                        <Modal item={item} onConfirm={handleConfirmDelete} />
                       </div>
                     </div>
                   </div>
