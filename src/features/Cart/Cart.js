@@ -30,16 +30,6 @@ export function Cart() {
 
   const handleConfirmDelete = (item) => {
     dispatch(RemoveCartItemAsync(item.id))
-      .unwrap()
-      .then((result) => {
-        if (RemoveCartItemAsync.fulfilled.match(result)) {
-          // Item was successfully removed
-          console.log(`Item with ID ${result.payload.id} removed.`);
-        } else {
-          // Handle the case where removal failed
-          console.error("Failed to remove item.");
-        }
-      });
   };
 
   return (
@@ -54,8 +44,8 @@ export function Cart() {
           {cartError && <p className="text-red-400">{cartError.message}</p>}
           <div className="flow-root">
             <ul className="-my-6 divide-y divide-gray-200">
-              {cartItems.map((item) => (
-                <li key={item.id} className="flex py-6">
+              {cartItems.map((item, index) => (
+                <li key={index} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
                       src={item.product.thumbnail}

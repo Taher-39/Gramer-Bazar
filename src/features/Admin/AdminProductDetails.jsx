@@ -76,8 +76,8 @@ export const AdminProductDetails = () => {
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            {breadcrumbs.map((breadcrumb) => (
-              <li key={breadcrumb.id}>
+            {breadcrumbs.map((breadcrumb, index) => (
+              <li key={index}>
                 <div className="flex items-center">
                   <a
                     href={breadcrumb.href}

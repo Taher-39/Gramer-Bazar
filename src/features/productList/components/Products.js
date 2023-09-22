@@ -75,7 +75,6 @@ export function Products() {
       );
       newFilter[section.id].splice(index, 1);
     }
-    // console.log({newFilter});
     setFilter(newFilter);
   };
 

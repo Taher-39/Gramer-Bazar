@@ -27,8 +27,8 @@ const Navbar = ({ children }) => {
     { name: "My Profile", link: "/profile" },
     { name: "My Orders", link: "/my-orders" },
     {
-      name: user?.email ? "Sign-Out" : "Sign-In",
-      link: user?.email ? "/sign-out" : "/login",
+      name: user?.id ? "Sign-Out" : "Sign-In",
+      link: user?.id ? "/sign-out" : "/login",
     },
   ];
   return (

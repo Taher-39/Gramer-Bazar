@@ -1,12 +1,21 @@
 export function createOrder(order) {
-  return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/orders", {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: { "content-type": "application/json" },
-    });
-    const data = await response.json();
-    resolve({ data });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("http://localhost:4000/orders", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: { "content-type": "application/json" },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        resolve({ data });
+      } else {
+        const error = await response.json();
+        resolve(error);
+      }
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 // fetch order with query id

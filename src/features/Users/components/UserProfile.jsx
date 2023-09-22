@@ -4,22 +4,22 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 const UserProfile = () => {
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const [selectEditIndex, setSelectEditIndex] = useState(-1);
   const [addNewAddress, setAddNewAddress] = useState(false);
   const { register, reset, handleSubmit, setValue } = useForm();
 
   const editAddressHandler = (updateAddressData, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
-    newUser.addresses.splice(index, 1, updateAddressData);
+    const newUser = { ...userInfo, address: [...userInfo.address] };
+    newUser.address.splice(index, 1, updateAddressData);
     dispatch(updateUserAsync(newUser));
     setSelectEditIndex(-1);
   };
 
   const handleEdit = (index) => {
     setSelectEditIndex(index);
-    const address = user.addresses[index];
+    const address = userInfo.address[index];
     setValue("name", address.name);
     setValue("country", address.country);
     setValue("email", address.email);
@@ -29,12 +29,12 @@ const UserProfile = () => {
     setValue("orderComments", address.orderComments);
   };
   const handleRemove = (item) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
-    newUser.addresses.splice(item, 1);
+    const newUser = { ...userInfo, address: [...userInfo.address] };
+    newUser.address.splice(item, 1);
     dispatch(updateUserAsync(newUser));
   };
-  const addNewAddressHandler = (address) => {
-    const newUser = { ...user, addresses: [...user.addresses, address] };
+  const addNewAddressHandler = (data) => {
+    const newUser = { ...userInfo, address: [...userInfo.address, data] };
     dispatch(updateUserAsync(newUser));
     setAddNewAddress(false);
   };
@@ -45,8 +45,8 @@ const UserProfile = () => {
           <p className="text-2xl font-semi-bold tracking-tight text-gray-900 py-2">
             My Profile
           </p>
-          {user.role === 'admin' && <p className="text-xl font-semi-bold tracking-tight text-green-600 py-2">
-            Role: {user.role}
+          {userInfo.role === 'admin' && <p className="text-xl font-semi-bold tracking-tight text-green-600 py-2">
+            Role: {userInfo.role}
           </p>}
         </div>
 
@@ -239,14 +239,13 @@ const UserProfile = () => {
               </div>
             </form>
           ) : null}
-          {user.addresses.map((address, index) => (
-            <div>
+          {userInfo.address.map((item, index) => (
+            <div key={index}>
               {selectEditIndex === index ? (
                 <form
                   className="bg-slate-100 px-10 py-5 rounded"
                   noValidate
                   onSubmit={handleSubmit((data) => {
-                    console.log("formdata", data);
                     editAddressHandler(data, index);
                     reset();
                   })}
@@ -428,30 +427,30 @@ const UserProfile = () => {
                 <div className="flex min-w-0 gap-x-4 ">
                   <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-gray-900">
-                      {address.name}
+                      {item.name}
                     </p>
                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                      {address.email}
+                      {item.email}
                     </p>
                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                      {address.phone}
+                      {item.phone}
                     </p>
                   </div>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                   <p className="text-sm leading-6 text-gray-900">
-                    {address.country}
+                    {item.country}
                   </p>
                   <p className="mt-1 text-xs leading-5 text-gray-500">
-                    {address.district}
+                    {item.district}
                   </p>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                   <p className="text-sm leading-6 text-gray-900">
-                    {address.thana}
+                    {item.thana}
                   </p>
                   <p className="text-sm leading-6 text-gray-900">
-                    {address.address}
+                    {item.address}
                   </p>
                 </div>
                 <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">

@@ -8,7 +8,7 @@ import {
 } from "../features/Cart/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { updateUserAsync } from "../features/Auth/AuthSlice";
+import { updateUserAsync } from "../features/Users/userSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
@@ -46,14 +46,12 @@ const CheckoutPage = () => {
   };
 
   const onSubmit = (data) => {
-    dispatch(
-      updateUserAsync({ ...user, address: [...user.addresses, data] })
-    );
+    dispatch(updateUserAsync({ ...user, address: [...user.address, data] }));
     reset();
   };
 
   const handleAddress = (e) => {
-    setSelectAddress(user.addresses[e.target.value]);
+    setSelectAddress(user.address[e.target.value]);
   };
   const handlePayment = (e) => {
     setSelectPaymentMthd(e.target.value);
@@ -63,7 +61,7 @@ const CheckoutPage = () => {
     if (selectAddress && selectPaymentMthd) {
       dispatch(
         createOrderAsync({
-          user,
+          user: user.id,
           selectAddress,
           selectPaymentMthd,
           cartItems,
@@ -77,7 +75,8 @@ const CheckoutPage = () => {
     }
     // TODO: redirect oredr success page, change stock, clear cart after order
   };
-  console.log("user from CheckoutPage", user);
+
+  console.log(user);
   return (
     <>
       {!cartItems.length && <Navigate to="/" replace={true}></Navigate>}
@@ -298,47 +297,47 @@ const CheckoutPage = () => {
                   </p>
 
                   <ul>
-                    {user?.addresses?.map((address, index) => (
+                    {user?.address?.map((item, index) => (
                       <div key={index}>
                         <div className="flex justify-between gap-x-6 py-5 border-2 border-solid border-gray-200 px-5 mb-4">
                           <div className="flex min-w-0 gap-x-4 ">
                             <input
                               onClick={handleAddress}
                               value={index}
-                              name="address"
+                              name="item"
                               type="radio"
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
                             <div className="min-w-0 flex-auto">
                               <p className="text-sm font-semibold leading-6 text-gray-900">
-                                {address.name}
+                                {item.name}
                               </p>
                               <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                                {address.email}
+                                {item.email}
                               </p>
                               <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                                {address.phone}
+                                {item.phone}
                               </p>
                             </div>
                           </div>
                           <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                             <p className="text-sm leading-6 text-gray-900">
-                              {address.country}
+                              {item.country}
                             </p>
                             <p className="mt-1 text-xs leading-5 text-gray-500">
-                              {address.district}
+                              {item.district}
                             </p>
                           </div>
                           <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                             <p className="text-sm leading-6 text-gray-900">
-                              {address.thana}
+                              {item.thana}
                             </p>
                             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              {address.phone}
+                              {item.phone}
                             </p>
                           </div>
                           <p className="text-sm leading-6 text-gray-900">
-                            {address.orderComments}
+                            {item.orderComments}
                           </p>
                         </div>
                       </div>
@@ -478,7 +477,7 @@ const CheckoutPage = () => {
 
                             <div className="flex">
                               <Modal
-                                item={item.product}
+                                item={item}
                                 onConfirm={handleConfirmDelete}
                               />
                             </div>
