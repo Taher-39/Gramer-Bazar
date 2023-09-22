@@ -69,6 +69,8 @@ export const AdminProductDetails = () => {
 
   if (!product) {
     return <div>Loading...</div>;
+  } else {
+    console.log("product.stock", product);
   }
 
   return (

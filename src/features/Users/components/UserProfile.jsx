@@ -34,7 +34,7 @@ const UserProfile = () => {
     dispatch(updateUserAsync(newUser));
   };
   const addNewAddressHandler = (data) => {
-    const newUser = { ...userInfo, address: [...userInfo.address, data] };
+    const newUser = { ...userInfo, address: [...userInfo?.address, data] };
     dispatch(updateUserAsync(newUser));
     setAddNewAddress(false);
   };
@@ -239,7 +239,7 @@ const UserProfile = () => {
               </div>
             </form>
           ) : null}
-          {userInfo.address.map((item, index) => (
+          {userInfo?.address?.map((item, index) => (
             <div key={index}>
               {selectEditIndex === index ? (
                 <form

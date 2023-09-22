@@ -30,11 +30,17 @@ export function fetchAllOrders(sort, pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
 
-  return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/orders?" + queryString);
-    const data = await response.json();
-    const totalOrders = await response.headers.get("X-Total-Count");
-    resolve({ data: { orders: data, totalOrders: +totalOrders } });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/orders/admin?" + queryString
+      );
+      const data = await response.json();
+      const totalOrders = await response.headers.get("X-Total-Count");
+      resolve({ data: { orders: data, totalOrders: +totalOrders } });
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 // update order with params id

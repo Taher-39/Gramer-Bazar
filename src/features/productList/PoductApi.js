@@ -10,15 +10,6 @@ export function createProduct(product) {
   });
 }
 
-export function fetchAllProducts() {
-  // todo: we will not hard code server url here
-  return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:4000/products");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
-
 export function fetchProductById(id) {
   // todo: we will not hard code server url here
   return new Promise(async (resolve) => {
@@ -28,7 +19,7 @@ export function fetchProductById(id) {
   });
 }
 
-export function fetchProductsByFilters(filter, sort, pagination) {
+export function fetchProductsByFilters(filter, sort, pagination, admin) {
   //filter = {'category': ['laptop', 'phone'] }
   //sort = {_sort:  'rating', _order: 'desc'}
   //pagination = {_page:  1, _limit: 10 }
@@ -51,12 +42,15 @@ export function fetchProductsByFilters(filter, sort, pagination) {
     queryString += `${key}=${pagination[key]}&`;
   }
 
+  if (admin) {
+    queryString += `admin=true`;
+  }
   return new Promise(async (resolve) => {
     const response = await fetch(
       "http://localhost:4000/products?" + queryString
     );
     const data = await response.json();
-    const totalItems = await response.headers.get("X-Total-Count");
+    const totalItems = response.headers.get("X-Total-Count");
     resolve({ data: { products: data, totalItems: +totalItems } });
   });
 }

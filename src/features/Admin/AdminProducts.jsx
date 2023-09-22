@@ -86,7 +86,9 @@ export const AdminProducts = () => {
 
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
-    dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
+    dispatch(
+      fetchProductsByFilterAsync({ filter, sort, pagination, admin: true })
+    );
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -460,8 +462,6 @@ const ProductGrid = ({ products }) => {
 
 const Pagination = ({ page, setPage, handlePage, totalItems }) => {
   let totalPage = Math.ceil(totalItems / ITEM_PER_PAGE);
-  // let display = "";
-  // page + 1 > totalPage || page - 1 < 1 ? (display = "none") : (display = "");
 
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">

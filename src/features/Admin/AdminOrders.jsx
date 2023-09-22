@@ -11,8 +11,6 @@ import { ITEM_PER_PAGE } from "../../app/constant";
 import {
   XMarkIcon,
   PencilSquareIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
 } from "@heroicons/react/20/solid";
 import Pagination from "../Common/Pagination";
 
@@ -140,7 +138,7 @@ const AdminOrders = () => {
                         <div className="flex items-center">
                           <div className="mr-2"></div>
                           <span className="font-medium">
-                            {order.id}) {order.user.name}
+                            {order.selectAddress.name}
                           </span>
                         </div>
                       </td>
@@ -149,13 +147,13 @@ const AdminOrders = () => {
                           <div className="flex items-center">
                             <div className="mr-2">
                               <img
-                                className="w-6 h-6 rounded-full"
-                                src={item.thumbnail}
+                                className="w-12 h-12 rounded-full"
+                                src={item.product.thumbnail}
                               />
                             </div>
-                            <span>
-                              {item.title} #{item.quantity} ${item.price}
-                            </span>
+                            <p>
+                              {item.product.title} #{item.product.quantity} ${item.product.price}
+                            </p>
                           </div>
                         </td>
                       ))}

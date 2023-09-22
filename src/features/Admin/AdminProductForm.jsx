@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import Modal from "../Common/Modal";
+import { useAlert } from "react-alert";
 
 const AdminProductForm = () => {
   const {
@@ -26,6 +27,7 @@ const AdminProductForm = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const selectedProduct = useSelector(selectProductById);
+  const alert = useAlert();
 
   useEffect(() => {
     if (params.id) {
@@ -58,6 +60,7 @@ const AdminProductForm = () => {
     const product = { ...selectedProduct };
     product.deleted = true;
     dispatch(updateProductAsync(product));
+    alert.error("Product Delete Successfully");
   };
   return (
     <>
@@ -83,9 +86,11 @@ const AdminProductForm = () => {
             product.id = params.id;
             product.rating = selectedProduct.rating || 0;
             dispatch(updateProductAsync(product));
+            alert.success("Product Update Successfully");
             reset();
           } else {
             dispatch(createProductAsync(product));
+            alert.success("Product Create Successfully");
             reset();
             //TODO: after add new product see added message
           }
@@ -96,7 +101,7 @@ const AdminProductForm = () => {
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Add New Product
             </h2>
-            {selectedProduct.deleted && (
+            {selectedProduct?.deleted && (
               <p className="text-red-400">Product Is Deleted</p>
             )}
 

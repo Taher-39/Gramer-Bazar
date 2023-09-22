@@ -17,6 +17,7 @@ const UserOrders = () => {
 
   return (
     <div>
+      {!orders?.length && <p className="text-2xl text-red-300">No Order Yet</p>}
       {orders?.map((order, index) => (
         <div key={index}>
           <div className="mx-auto bg-white max-w-4xl md:w-4/5 sm:w-4/5 px-4 sm:px-6 lg:px-8">

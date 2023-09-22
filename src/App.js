@@ -21,7 +21,6 @@ import AdminHome from "./pages/AdminHome";
 import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
 import ProtectedAdminRoute from "./features/Auth/Components/ProtectedAdminRoute";
 import AboutPage from "./pages/AboutPage";
-import AddNewProductPage from "./pages/AdminProductFormPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import { positions, Provider } from "react-alert";

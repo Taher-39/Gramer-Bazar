@@ -409,7 +409,7 @@ const ProductGrid = ({ products, status }) => {
                     : `/products/${product.id}`
                 }`}
               >
-                <div className="group relative border-solid border-2 border-gray-200 p-3 rounded">
+                <div className="group relative border-solid border-2 border-gray-200 p-3 rounded ">
                   <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
                     <img
                       src={product.thumbnail}
